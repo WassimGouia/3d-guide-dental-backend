@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_impression_formlabs",
+  "info": {
+    "displayName": "Impression Formlabs®"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "Guide_supplementaire": {
+      "type": "biginteger"
+    }
+  }
+}

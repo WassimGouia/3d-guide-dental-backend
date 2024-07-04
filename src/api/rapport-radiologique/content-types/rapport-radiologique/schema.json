@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rapport_radiologiques",
+  "info": {
+    "singularName": "rapport-radiologique",
+    "pluralName": "rapport-radiologiques",
+    "displayName": "Rapport radiologique",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "rapport_radiologiques"
+    },
+    "first_comment": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "second_comment": {
+      "type": "string"
+    },
+    "Implantation_prevue": {
+      "type": "boolean"
+    },
+    "Evaluer_implant_existant": {
+      "type": "boolean"
+    },
+    "Evaluation_de_ATM": {
+      "type": "boolean"
+    },
+    "Eliminer_une_pathologie": {
+      "type": "boolean"
+    },
+    "autres": {
+      "type": "boolean"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "submit": {
+      "type": "boolean"
+    },
+    "archive": {
+      "type": "boolean"
+    },
+    "numero_cas": {
+      "type": "biginteger"
+    }
+  }
+}

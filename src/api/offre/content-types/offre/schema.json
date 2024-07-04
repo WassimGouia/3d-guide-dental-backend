@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offres",
+  "info": {
+    "singularName": "offre",
+    "pluralName": "offres",
+    "displayName": "offre",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "offreActuelle": {
+      "type": "integer"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "offre"
+    },
+    "commandes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::commande.commande",
+      "mappedBy": "offre"
+    }
+  }
+}

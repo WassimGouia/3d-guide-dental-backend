@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commandes",
+  "info": {
+    "singularName": "commande",
+    "pluralName": "commandes",
+    "displayName": "commande",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "paymentId": {
+      "type": "string"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "inversedBy": "commandes"
+    },
+    "cost": {
+      "type": "biginteger"
+    },
+    "patients": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::patient.patient",
+      "inversedBy": "commandes"
+    },
+    "offre": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::offre.offre",
+      "inversedBy": "commandes"
+    },
+    "StripeID": {
+      "type": "string"
+    }
+  }
+}

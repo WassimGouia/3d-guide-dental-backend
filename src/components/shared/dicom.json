@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_dicoms",
+  "info": {
+    "displayName": "DICOM"
+  },
+  "options": {},
+  "attributes": {
+    "active": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

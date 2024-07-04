@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guide_pour_gingivectomies",
+  "info": {
+    "singularName": "guide-pour-gingivectomie",
+    "pluralName": "guide-pour-gingivectomies",
+    "displayName": "Guide pour gingivectomie",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "guide_pour_gingivectomies"
+    },
+    "options_generiques": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.options-generiques"
+    },
+    "DICOM": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.dicom"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "cout": {
+      "type": "biginteger"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "numero_cas": {
+      "type": "biginteger"
+    },
+    "submit": {
+      "type": "boolean"
+    },
+    "archive": {
+      "type": "boolean"
+    },
+    "En_attente_approbation": {
+      "type": "boolean"
+    },
+    "en__cours_de_modification": {
+      "type": "boolean"
+    },
+    "soumis": {
+      "type": "boolean"
+    },
+    "approuve": {
+      "type": "boolean"
+    },
+    "produire_expide": {
+      "type": "boolean"
+    }
+  }
+}

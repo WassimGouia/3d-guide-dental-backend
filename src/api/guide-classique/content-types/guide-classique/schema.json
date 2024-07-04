@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guide_classiques",
+  "info": {
+    "singularName": "guide-classique",
+    "pluralName": "guide-classiques",
+    "displayName": "Guide classique",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "guide_classiques"
+    },
+    "Full_guidee": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.full-guidee"
+    },
+    "Forage_pilote": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.forage-pilote"
+    },
+    "Marque_de_la_trousse": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.marque-de-la-trousse-de-chirugie-utilisee"
+    },
+    "options_generiques": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.options-generiques"
+    },
+    "Clavettes_de_stabilisation": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.clavettes-de-stabilisation"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "cout": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cout"
+    },
+    "marque_implant_pour_la_dent": {
+      "type": "json"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "numero_cas": {
+      "type": "biginteger"
+    },
+    "submit": {
+      "type": "boolean"
+    },
+    "archive": {
+      "type": "boolean"
+    }
+  }
+}

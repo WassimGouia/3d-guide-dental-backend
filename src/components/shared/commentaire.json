@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_commentaires",
+  "info": {
+    "displayName": "commentaire_rd",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "second": {
+      "type": "string"
+    },
+    "first": {
+      "type": "string"
+    }
+  }
+}

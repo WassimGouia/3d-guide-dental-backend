@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_shared_addresses",
+  "info": {
+    "displayName": "Address",
+    "icon": "pin",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Address": {
+      "type": "string"
+    },
+    "Office": {
+      "type": "string"
+    },
+    "zipCode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "State": {
+      "type": "string"
+    }
+  }
+}

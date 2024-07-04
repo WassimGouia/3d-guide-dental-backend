@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_options_generiques",
+  "info": {
+    "displayName": "options génériques",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Smile_Design": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.option"
+    },
+    "Impression_Formlabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.impression-formlabs"
+    },
+    "Suppression_numerique": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.suppression-numerique"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

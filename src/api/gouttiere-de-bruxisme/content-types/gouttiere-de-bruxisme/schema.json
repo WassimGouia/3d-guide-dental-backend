@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gouttiere_de_bruxismes",
+  "info": {
+    "singularName": "gouttiere-de-bruxisme",
+    "pluralName": "gouttiere-de-bruxismes",
+    "displayName": "Gouttière de bruxisme",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "les_options_generiques": {
+      "displayName": "les options génériques ci-dessous",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.les-options-generiques-ci-dessous"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "cout": {
+      "type": "biginteger"
+    },
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "gouttiere_de_bruxismes"
+    },
+    "numero_cas": {
+      "type": "biginteger"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "submit": {
+      "type": "boolean"
+    },
+    "archive": {
+      "type": "boolean"
+    },
+    "En_attente_approbation": {
+      "type": "boolean"
+    },
+    "en__cours_de_modification": {
+      "type": "boolean"
+    },
+    "soumis": {
+      "type": "boolean"
+    },
+    "approuve": {
+      "type": "boolean"
+    },
+    "produire_expide": {
+      "type": "boolean"
+    }
+  }
+}

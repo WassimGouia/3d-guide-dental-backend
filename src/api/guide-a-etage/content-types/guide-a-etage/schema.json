@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guide_a_etages",
+  "info": {
+    "singularName": "guide-a-etage",
+    "pluralName": "guide-a-etages",
+    "displayName": "guide a etage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "service": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service.service",
+      "inversedBy": "guide_a_etages"
+    },
+    "Options_supplementaires": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.option"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "options_generiques": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.option"
+    },
+    "cout": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cout"
+    },
+    "Full_guidee": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.full-guidee"
+    },
+    "Forage_pilote": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.forage-pilote"
+    },
+    "Marque_de_la_clavette": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.marque-de-la-clavette"
+    },
+    "Marque_de_la_trousse": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.marque-de-la-trousse-de-chirugie-utilisee"
+    },
+    "marque_implant_pour_la_dent": {
+      "type": "json"
+    },
+    "numero_cas": {
+      "type": "biginteger"
+    },
+    "patient": {
+      "type": "string"
+    },
+    "submit": {
+      "type": "boolean"
+    },
+    "archive": {
+      "type": "boolean"
+    }
+  }
+}

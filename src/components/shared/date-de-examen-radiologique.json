@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_date_de_examen_radiologiques",
+  "info": {
+    "displayName": "Date_de_examen_radiologique"
+  },
+  "options": {},
+  "attributes": {
+    "date": {
+      "type": "string"
+    }
+  }
+}

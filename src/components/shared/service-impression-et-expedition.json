@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_service_impression_et_expeditions",
+  "info": {
+    "displayName": "service impression et expedition"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  }
+}

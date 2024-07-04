@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_les_options_generiques",
+  "info": {
+    "displayName": "les options génériques"
+  },
+  "options": {},
+  "attributes": {
+    "active": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

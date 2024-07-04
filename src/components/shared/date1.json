@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_date1s",
+  "info": {
+    "displayName": "date1"
+  },
+  "options": {},
+  "attributes": {
+    "date": {
+      "type": "string"
+    }
+  }
+}

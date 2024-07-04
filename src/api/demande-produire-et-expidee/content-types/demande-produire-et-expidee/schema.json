@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demande_produire_et_expidees",
+  "info": {
+    "singularName": "demande-produire-et-expidee",
+    "pluralName": "demande-produire-et-expidees",
+    "displayName": "demande produire et expidée",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "caseNumber": {
+      "type": "biginteger"
+    },
+    "type_travail": {
+      "type": "string"
+    },
+    "cost": {
+      "type": "biginteger"
+    },
+    "patient": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patients",
+  "info": {
+    "singularName": "patient",
+    "pluralName": "patients",
+    "displayName": "Patient",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullname": {
+      "type": "string",
+      "required": true
+    },
+    "caseNumber": {
+      "type": "integer",
+      "required": false
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service",
+      "mappedBy": "patient"
+    },
+    "commandes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::commande.commande",
+      "mappedBy": "patients"
+    }
+  }
+}

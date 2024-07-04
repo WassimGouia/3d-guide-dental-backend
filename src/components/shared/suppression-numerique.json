@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_suppression_numeriques",
+  "info": {
+    "displayName": "Suppression numérique"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

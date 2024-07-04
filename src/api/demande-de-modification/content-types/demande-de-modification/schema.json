@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demande_de_modifications",
+  "info": {
+    "singularName": "demande-de-modification",
+    "pluralName": "demande-de-modifications",
+    "displayName": "demande de modification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "patient": {
+      "type": "string"
+    },
+    "caseNumber": {
+      "type": "biginteger"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "type_travail": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_couts",
+  "info": {
+    "displayName": "cout"
+  },
+  "options": {},
+  "attributes": {
+    "cout": {
+      "type": "biginteger"
+    }
+  }
+}

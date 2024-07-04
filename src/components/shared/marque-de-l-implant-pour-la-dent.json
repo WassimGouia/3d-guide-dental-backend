@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_marque_de_l_implant_pour_la_dents",
+  "info": {
+    "displayName": "Marque de l'implant pour la dent",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "index_du_dent": {
+      "type": "biginteger"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

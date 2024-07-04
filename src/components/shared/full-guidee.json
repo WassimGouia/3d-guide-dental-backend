@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_full_guidees",
+  "info": {
+    "displayName": "Full guidée"
+  },
+  "options": {},
+  "attributes": {
+    "titlle": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  }
+}

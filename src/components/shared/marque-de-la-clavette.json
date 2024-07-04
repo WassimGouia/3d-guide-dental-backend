@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_marque_de_la_clavettes",
+  "info": {
+    "displayName": "Marque de la clavette",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

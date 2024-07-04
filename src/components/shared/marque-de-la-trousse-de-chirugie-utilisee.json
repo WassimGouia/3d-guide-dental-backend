@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_marque_de_la_trousse_de_chirugie_utilisees",
+  "info": {
+    "displayName": "Marque de la trousse de chirugie utilisée",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_forage_pilotes",
+  "info": {
+    "displayName": "Forage pilote"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  }
+}

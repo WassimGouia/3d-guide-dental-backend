@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_les_options_generiques_ci_dessous",
+  "info": {
+    "displayName": "les options génériques ci-dessous",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Suppression_numerique_de_dents": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.suppression-numerique"
+    },
+    "Impression_Formlabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.impression-formlabs"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

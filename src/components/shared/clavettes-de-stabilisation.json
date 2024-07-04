@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_clavettes_de_stabilisations",
+  "info": {
+    "displayName": "Clavettes de stabilisation",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "nombre_des_clavettes": {
+      "type": "biginteger"
+    }
+  }
+}
