@@ -861,7 +861,6 @@ export interface ApiCommandeCommande extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    paymentId: Attribute.String;
     services: Attribute.Relation<
       'api::commande.commande',
       'manyToMany',

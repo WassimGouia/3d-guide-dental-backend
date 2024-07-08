@@ -1,12 +1,11 @@
 module.exports = {
   routes: [
     {
-      method: "POST",
-      path: "/webhook",
-      handler: "commande.webhook",
+      method: 'POST',
+      path: '/confirm-payment',
+      handler: 'confirm-payment.confirmPayment',
       config: {
         auth: false,
-        policies: [],
       },
     },
   ],

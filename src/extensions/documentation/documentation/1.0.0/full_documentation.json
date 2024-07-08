@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-07-04T14:10:32.781Z"
+    "x-generation-date": "2024-07-07T19:02:21.483Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1990,9 +1990,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -2770,9 +2767,6 @@
           "data": {
             "type": "object",
             "properties": {
-              "paymentId": {
-                "type": "string"
-              },
               "services": {
                 "type": "array",
                 "items": {
@@ -2873,9 +2867,6 @@
       "Commande": {
         "type": "object",
         "properties": {
-          "paymentId": {
-            "type": "string"
-          },
           "services": {
             "type": "object",
             "properties": {
@@ -4683,9 +4674,6 @@
                                               "attributes": {
                                                 "type": "object",
                                                 "properties": {
-                                                  "paymentId": {
-                                                    "type": "string"
-                                                  },
                                                   "services": {
                                                     "type": "object",
                                                     "properties": {
@@ -8243,9 +8231,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -11014,9 +10999,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -13840,9 +13822,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -16661,9 +16640,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -19623,9 +19599,6 @@
                                                             "attributes": {
                                                               "type": "object",
                                                               "properties": {
-                                                                "paymentId": {
-                                                                  "type": "string"
-                                                                },
                                                                 "services": {
                                                                   "type": "object",
                                                                   "properties": {
@@ -22457,9 +22430,6 @@
                                               "attributes": {
                                                 "type": "object",
                                                 "properties": {
-                                                  "paymentId": {
-                                                    "type": "string"
-                                                  },
                                                   "services": {
                                                     "type": "object",
                                                     "properties": {
@@ -25145,9 +25115,6 @@
                                             "attributes": {
                                               "type": "object",
                                               "properties": {
-                                                "paymentId": {
-                                                  "type": "string"
-                                                },
                                                 "services": {
                                                   "type": "object",
                                                   "properties": {
@@ -28137,9 +28104,6 @@
                                                           "attributes": {
                                                             "type": "object",
                                                             "properties": {
-                                                              "paymentId": {
-                                                                "type": "string"
-                                                              },
                                                               "services": {
                                                                 "type": "object",
                                                                 "properties": {

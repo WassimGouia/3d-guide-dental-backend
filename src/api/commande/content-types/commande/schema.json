@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "paymentId": {
-      "type": "string"
-    },
     "services": {
       "type": "relation",
       "relation": "manyToMany",
