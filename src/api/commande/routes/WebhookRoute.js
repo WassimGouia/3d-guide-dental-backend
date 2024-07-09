@@ -8,5 +8,14 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: 'GET',
+      path: '/users/:id/country',
+      handler: 'confirm-payment.getCountryByUserId',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };
