@@ -1185,7 +1185,6 @@ export interface ApiOffreOffre extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    offreActuelle: Attribute.Integer;
     users_permissions_user: Attribute.Relation<
       'api::offre.offre',
       'oneToOne',
@@ -1196,6 +1195,15 @@ export interface ApiOffreOffre extends Schema.CollectionType {
       'oneToMany',
       'api::commande.commande'
     >;
+    CurrentPlan: Attribute.Enumeration<
+      ['Essential', 'Privilege', 'Elite', 'Premium']
+    > &
+      Attribute.DefaultTo<'Essential'>;
+    yearCaseCount: Attribute.Integer & Attribute.DefaultTo<0>;
+    accountCreationDate: Attribute.Date;
+    lastEvaluationDate: Attribute.Date;
+    quarterCaseCount: Attribute.Integer & Attribute.DefaultTo<0>;
+    planStartDate: Attribute.Date;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1359,7 +1367,7 @@ export interface ApiServiceService extends Schema.CollectionType {
           localized: true;
         };
       }>;
-    image: Attribute.Media &
+    image: Attribute.Media<'images'> &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

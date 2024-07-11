@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-07-09T15:51:40.345Z"
+    "x-generation-date": "2024-07-11T11:00:55.902Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2047,9 +2047,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -2423,6 +2420,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -4731,9 +4755,6 @@
                                                           "attributes": {
                                                             "type": "object",
                                                             "properties": {
-                                                              "offreActuelle": {
-                                                                "type": "integer"
-                                                              },
                                                               "users_permissions_user": {
                                                                 "type": "object",
                                                                 "properties": {
@@ -5107,6 +5128,33 @@
                                                                     }
                                                                   }
                                                                 }
+                                                              },
+                                                              "CurrentPlan": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                  "Essential",
+                                                                  "Privilege",
+                                                                  "Elite",
+                                                                  "Premium"
+                                                                ]
+                                                              },
+                                                              "yearCaseCount": {
+                                                                "type": "integer"
+                                                              },
+                                                              "accountCreationDate": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                              },
+                                                              "lastEvaluationDate": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                              },
+                                                              "quarterCaseCount": {
+                                                                "type": "integer"
+                                                              },
+                                                              "planStartDate": {
+                                                                "type": "string",
+                                                                "format": "date"
                                                               },
                                                               "createdAt": {
                                                                 "type": "string",
@@ -8288,9 +8336,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -8664,6 +8709,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -11056,9 +11128,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -11432,6 +11501,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -13879,9 +13975,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -14255,6 +14348,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -16697,9 +16817,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -17073,6 +17190,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -17460,9 +17604,6 @@
           "data": {
             "type": "object",
             "properties": {
-              "offreActuelle": {
-                "type": "integer"
-              },
               "users_permissions_user": {
                 "oneOf": [
                   {
@@ -17487,6 +17628,33 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "CurrentPlan": {
+                "type": "string",
+                "enum": [
+                  "Essential",
+                  "Privilege",
+                  "Elite",
+                  "Premium"
+                ]
+              },
+              "yearCaseCount": {
+                "type": "integer"
+              },
+              "accountCreationDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "lastEvaluationDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "quarterCaseCount": {
+                "type": "integer"
+              },
+              "planStartDate": {
+                "type": "string",
+                "format": "date"
               }
             }
           }
@@ -17541,9 +17709,6 @@
       "Offre": {
         "type": "object",
         "properties": {
-          "offreActuelle": {
-            "type": "integer"
-          },
           "users_permissions_user": {
             "type": "object",
             "properties": {
@@ -19656,9 +19821,6 @@
                                                                         "attributes": {
                                                                           "type": "object",
                                                                           "properties": {
-                                                                            "offreActuelle": {
-                                                                              "type": "integer"
-                                                                            },
                                                                             "users_permissions_user": {
                                                                               "type": "object",
                                                                               "properties": {
@@ -19695,6 +19857,33 @@
                                                                                   }
                                                                                 }
                                                                               }
+                                                                            },
+                                                                            "CurrentPlan": {
+                                                                              "type": "string",
+                                                                              "enum": [
+                                                                                "Essential",
+                                                                                "Privilege",
+                                                                                "Elite",
+                                                                                "Premium"
+                                                                              ]
+                                                                            },
+                                                                            "yearCaseCount": {
+                                                                              "type": "integer"
+                                                                            },
+                                                                            "accountCreationDate": {
+                                                                              "type": "string",
+                                                                              "format": "date"
+                                                                            },
+                                                                            "lastEvaluationDate": {
+                                                                              "type": "string",
+                                                                              "format": "date"
+                                                                            },
+                                                                            "quarterCaseCount": {
+                                                                              "type": "integer"
+                                                                            },
+                                                                            "planStartDate": {
+                                                                              "type": "string",
+                                                                              "format": "date"
                                                                             },
                                                                             "createdAt": {
                                                                               "type": "string",
@@ -20046,6 +20235,33 @@
                 }
               }
             }
+          },
+          "CurrentPlan": {
+            "type": "string",
+            "enum": [
+              "Essential",
+              "Privilege",
+              "Elite",
+              "Premium"
+            ]
+          },
+          "yearCaseCount": {
+            "type": "integer"
+          },
+          "accountCreationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "lastEvaluationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "quarterCaseCount": {
+            "type": "integer"
+          },
+          "planStartDate": {
+            "type": "string",
+            "format": "date"
           },
           "createdAt": {
             "type": "string",
@@ -22487,9 +22703,6 @@
                                                           "attributes": {
                                                             "type": "object",
                                                             "properties": {
-                                                              "offreActuelle": {
-                                                                "type": "integer"
-                                                              },
                                                               "users_permissions_user": {
                                                                 "type": "object",
                                                                 "properties": {
@@ -22863,6 +23076,33 @@
                                                                     }
                                                                   }
                                                                 }
+                                                              },
+                                                              "CurrentPlan": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                  "Essential",
+                                                                  "Privilege",
+                                                                  "Elite",
+                                                                  "Premium"
+                                                                ]
+                                                              },
+                                                              "yearCaseCount": {
+                                                                "type": "integer"
+                                                              },
+                                                              "accountCreationDate": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                              },
+                                                              "lastEvaluationDate": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                              },
+                                                              "quarterCaseCount": {
+                                                                "type": "integer"
+                                                              },
+                                                              "planStartDate": {
+                                                                "type": "string",
+                                                                "format": "date"
                                                               },
                                                               "createdAt": {
                                                                 "type": "string",
@@ -25172,9 +25412,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "offreActuelle": {
-                                                              "type": "integer"
-                                                            },
                                                             "users_permissions_user": {
                                                               "type": "object",
                                                               "properties": {
@@ -25548,6 +25785,33 @@
                                                                   }
                                                                 }
                                                               }
+                                                            },
+                                                            "CurrentPlan": {
+                                                              "type": "string",
+                                                              "enum": [
+                                                                "Essential",
+                                                                "Privilege",
+                                                                "Elite",
+                                                                "Premium"
+                                                              ]
+                                                            },
+                                                            "yearCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "accountCreationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "lastEvaluationDate": {
+                                                              "type": "string",
+                                                              "format": "date"
+                                                            },
+                                                            "quarterCaseCount": {
+                                                              "type": "integer"
+                                                            },
+                                                            "planStartDate": {
+                                                              "type": "string",
+                                                              "format": "date"
                                                             },
                                                             "createdAt": {
                                                               "type": "string",
@@ -28161,9 +28425,6 @@
                                                                       "attributes": {
                                                                         "type": "object",
                                                                         "properties": {
-                                                                          "offreActuelle": {
-                                                                            "type": "integer"
-                                                                          },
                                                                           "users_permissions_user": {
                                                                             "type": "object",
                                                                             "properties": {
@@ -28537,6 +28798,33 @@
                                                                                 }
                                                                               }
                                                                             }
+                                                                          },
+                                                                          "CurrentPlan": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                              "Essential",
+                                                                              "Privilege",
+                                                                              "Elite",
+                                                                              "Premium"
+                                                                            ]
+                                                                          },
+                                                                          "yearCaseCount": {
+                                                                            "type": "integer"
+                                                                          },
+                                                                          "accountCreationDate": {
+                                                                            "type": "string",
+                                                                            "format": "date"
+                                                                          },
+                                                                          "lastEvaluationDate": {
+                                                                            "type": "string",
+                                                                            "format": "date"
+                                                                          },
+                                                                          "quarterCaseCount": {
+                                                                            "type": "integer"
+                                                                          },
+                                                                          "planStartDate": {
+                                                                            "type": "string",
+                                                                            "format": "date"
                                                                           },
                                                                           "createdAt": {
                                                                             "type": "string",

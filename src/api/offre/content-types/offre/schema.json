@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "offreActuelle": {
-      "type": "integer"
-    },
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
@@ -26,6 +23,28 @@
       "relation": "oneToMany",
       "target": "api::commande.commande",
       "mappedBy": "offre"
+    },
+    "CurrentPlan": {
+      "type": "enumeration",
+      "enum": ["Essential", "Privilege", "Elite", "Premium"],
+      "default": "Essential"
+    },
+    "yearCaseCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "accountCreationDate": {
+      "type": "date"
+    },
+    "lastEvaluationDate": {
+      "type": "date"
+    },
+    "quarterCaseCount": {
+      "type": "integer",
+      "default": 0
+    },
+    "planStartDate": {
+      "type": "date"
     }
   }
 }
