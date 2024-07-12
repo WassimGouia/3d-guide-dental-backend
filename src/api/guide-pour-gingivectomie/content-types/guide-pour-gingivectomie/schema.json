@@ -60,6 +60,9 @@
     },
     "produire_expide": {
       "type": "boolean"
+    },
+    "selected_teeth": {
+      "type": "json"
     }
   }
 }

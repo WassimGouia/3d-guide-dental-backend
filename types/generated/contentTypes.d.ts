@@ -999,6 +999,7 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
     soumis: Attribute.Boolean;
     approuve: Attribute.Boolean;
     produire_expide: Attribute.Boolean;
+    selected_teeth: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1155,6 +1156,7 @@ export interface ApiGuidePourGingivectomieGuidePourGingivectomie
     soumis: Attribute.Boolean;
     approuve: Attribute.Boolean;
     produire_expide: Attribute.Boolean;
+    selected_teeth: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
