@@ -1,8 +1,18 @@
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 
+const getDiscount = (plan) => {
+  const discounts = {
+    Essential: 5,
+    Privilege: 10,
+    Elite: 15,
+    Premium: 20,
+  };
+  return discounts[plan] || 0;
+};
 module.exports = {
+  
   async confirmPayment(ctx) {
-    const { sessionId, service, caseNumber } = ctx.request.body;
+    const { sessionId, service, caseNumber,country } = ctx.request.body;
 
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -52,13 +62,12 @@ module.exports = {
           .query("plugin::users-permissions.user")
           .findOne({
             where: { email: userEmail },
-            populate: ["offre"],
+            populate: ["offre","location"],
           });
 
         if (user && user.offre) {
           console.log(
-            "Before update - User offre:",
-            JSON.stringify(user.offre, null, 2)
+            "location",user.location
           );
 
           // Update the offre
@@ -122,6 +131,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
+            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -137,6 +147,16 @@ module.exports = {
                     </td>
                 </tr>
             </table>
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                <tr>
+                    <td style="padding-right: 10px;">
+                        <h4 style="margin: 0;">Shipping Address:</h4>
+                    </td>
+                    <td style="padding-right: 10px;">
+                        <p style="margin: 5px 0;">${user.location[0].country}, ${user.location[0].city}, ${user.location[0].State}, ${user.location[0].Address}, ${user.location[0].zipCode}</p>
+                    </td>
+                </tr>
+            </table>
         </div>
 
       <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
@@ -144,12 +164,16 @@ module.exports = {
           <tr>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Service</th>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Amount</th>
+            <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Discount</th>
+            <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Delivery</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">${commande.cost} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${((commande.cost / (1 - (getDiscount(user.offre.CurrentPlan) / 100))) - (country === "france" ? 7 : 15)).toFixed(0)} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">+ ${country === "france" ? 7: 15} EUR</td>
           </tr>
         </tbody>
       </table>
