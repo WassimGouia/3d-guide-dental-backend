@@ -61,6 +61,7 @@ module.exports = createCoreService("api::offre.offre", ({ strapi }) => ({
     if (isFirstYear) {
       newPlan = this.determineFirstYearPlan(user.offre.yearCaseCount);
     } else {
+      console.log("UpdatePlan - Current Quarter:", now.quarter);
       newPlan = this.determineQuarterlyPlan(
         user.offre.quarterCaseCount,
         now.quarter
@@ -109,10 +110,19 @@ module.exports = createCoreService("api::offre.offre", ({ strapi }) => ({
     return "Premium";
   },
 
-  determineQuarterlyPlan(caseCount) {
-    if (caseCount <= 20) return "Essential";
-    if (caseCount <= 40) return "Privilege";
-    if (caseCount <= 60) return "Elite";
+  determineQuarterlyPlan(caseCount, quarter) {
+    const thresholds = {
+      1: [20, 40, 60], // Jan-Mar
+      2: [5, 10, 15], // Apr-Jun
+      3: [10, 20, 30], // Jul-Sep
+      4: [15, 30, 45], // Oct-Dec
+    };
+
+    const [essential, privilege, elite] = thresholds[quarter];
+
+    if (caseCount <= essential) return "Essential";
+    if (caseCount <= privilege) return "Privilege";
+    if (caseCount <= elite) return "Elite";
     return "Premium";
   },
 
