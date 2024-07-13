@@ -43,7 +43,7 @@ module.exports = {
         });
 
         const updatedGuide = await strapi.db
-        .query("api::guide-a-etage.guide-a-etage")
+        .query("api::rapport-radiologique.rapport-radiologique")
         .update({
           where: { id: guideId },
           data: {
@@ -51,21 +51,16 @@ module.exports = {
             archive: false,
           },
         });
+        
 
-        const guide = await strapi.db
-          .query("api::guide-a-etage.guide-a-etage")
+        const rapport = await strapi.db
+          .query("api::rapport-radiologique.rapport-radiologique")
           .findOne({
             where: { numero_cas: caseNumber },
-            populate: [
-              "Options_supplementaires",
-              "options_generiques",
-              "cout",
-              "Full_guidee",
-              "Forage_pilote",
-              "Marque_de_la_clavette",
-              "Marque_de_la_trousse",
-            ],
+            populate:["service","Implantation_prevue","second_comment","Evaluer_implant_existant","Evaluation_de_ATM","Eliminer_une_pathologie","autres","patient","numero_cas","date","first_comment"]
           });
+
+          console.log("rapport",rapport)
 
         const userEmail = session.customer_details.email;
         const user = await strapi.db
@@ -76,10 +71,7 @@ module.exports = {
           });
 
         if (user && user.offre) {
-          console.log(
-            "location",user.location
-          );
-
+          
           // Update the offre
           const updatedOffre = await strapi.entityService.update(
             "api::offre.offre",
@@ -92,19 +84,9 @@ module.exports = {
             }
           );
 
-          console.log(
-            "After case count update - Offre:",
-            JSON.stringify(updatedOffre, null, 2)
-          );
-
           // Update the plan
           const offreService = strapi.service("api::offre.offre");
           const updatedPlan = await offreService.updatePlan(user.id);
-
-          console.log(
-            "After plan update - Plan:",
-            JSON.stringify(updatedPlan, null, 2)
-          );
 
           // Link the commande to the offre
           await strapi.entityService.update(
@@ -175,15 +157,13 @@ module.exports = {
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Service</th>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Amount</th>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Discount</th>
-            <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Delivery</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">${((commande.cost / (1 - (getDiscount(user.offre.CurrentPlan) / 100))) - (user.location[0].country.toLowerCase() === "france" ? 7 : 15)).toFixed(0)} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${((commande.cost / (1 - (getDiscount(user.offre.CurrentPlan) / 100)))).toFixed(0)} EUR</td>
             <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" ? 7: 15} EUR</td>
           </tr>
         </tbody>
       </table>
@@ -191,73 +171,30 @@ module.exports = {
         <h4>Total Amount: ${commande.cost} EUR</h4>
       </div>`;
 
-        if (guide) {
-          const checkIcon = "✔️";
-          const xIcon = "❌";
-
-          const getOptionIcons = (options) => {
-            return options
-              .map(
-                (option) =>
-                  `${option.title}: ${option.active ? checkIcon : xIcon}`
-              )
-              .join("<br>");
-          };
-
-          const getComponentIcons = (components) => {
-            return components
-              .map((component) => `${component.active ? checkIcon : xIcon}`)
-              .join(" ");
-          };
-
-          emailContent += `
-        <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Guide Details:</h3>
-            <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${
-              guide.numero_cas
-            }</p>
-            <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${
-              guide.patient
-            }</p>
-            <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${
-              guide.comment
-            }</p>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options Supplementaires:</h4>
-            <p style="margin: 10px 0; color: #000;">${getOptionIcons(
-              guide.Options_supplementaires
-            )}</p>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options Generiques:</h4>
-            <p style="margin: 10px 0; color: #000;">${getOptionIcons(
-              guide.options_generiques
-            )}</p>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Full Guidee: ${getComponentIcons(
-              guide.Full_guidee
-            )}</h4>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Forage Pilote: ${getComponentIcons(
-              guide.Forage_pilote
-            )}</h4>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Marque de la Clavette: ${guide.Marque_de_la_clavette.map(
-              (mc) => `${mc.description}`
-            )}</h4>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Marque de la Trousse: ${guide.Marque_de_la_trousse.map(
-              (mt) => `${mt.description}`
-            )}</h4>
-            
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Marque Implant pour la Dent:</h4>
-            <p style="margin: 10px 0; color: #000;">${Object.entries(
-              guide.marque_implant_pour_la_dent[" index"]
-            )
-              .map(([key, value]) => `${key}: ${value}`)
-              .join("<br>")}</p>
-        </div>`;
-        }
-
+      if (rapport) {
+        const checkIcon = "✔️";
+        const xIcon = "❌";
+      
+        const getBooleanIcon = (value) => (value ? checkIcon : xIcon);
+      
+        emailContent += `
+          <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
+              <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Rapport Details:</h3>
+              <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Date:</strong> ${rapport.date}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>First Comment:</strong> ${rapport.first_comment}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Second Comment:</strong> ${rapport.second_comment}</p>
+              
+              <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options:</h4>
+              <p style="margin: 10px 0; color: #000;"><strong>Implantation prévue:</strong> ${getBooleanIcon(rapport.Implantation_prevue)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Évaluer implant existant:</strong> ${getBooleanIcon(rapport.Evaluer_implant_existant)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Évaluation de l'ATM:</strong> ${getBooleanIcon(rapport.Evaluation_de_ATM)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Éliminer une pathologie:</strong> ${getBooleanIcon(rapport.Eliminer_une_pathologie)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Autres:</strong> ${getBooleanIcon(rapport.autres)}</p>
+          </div>`;
+      }
+      
         emailContent += `
             <div style="padding: 20px 0; text-align: center; border-top: 2px solid #ffd700;">
                 <p style="margin: 0; color: #000;">Thank you for choosing our service.</p>
@@ -282,5 +219,5 @@ module.exports = {
       ctx.response.status = 500;
       return { error: `Failed to confirm payment: ${error.message}` };
     }
-  },
+  }
 };

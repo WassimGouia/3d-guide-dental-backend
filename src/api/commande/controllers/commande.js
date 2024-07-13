@@ -4,12 +4,24 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::commande.commande", ({ strapi }) => ({
   async create(ctx) {
-    const { cost,service,patient } = ctx.request.body;
+    const { cost,service,email,guideId } = ctx.request.body;
+    const successUrls = {
+      1: 'http://localhost:5173/service1-success',
+      2: 'http://localhost:5173/service2-success',
+      3: 'http://localhost:5173/service3-success',
+      4: 'http://localhost:5173/service4-success',
+      5: 'http://localhost:5173/service5-success',
+      6: 'http://localhost:5173/service6-success',
+    };
+
+    const successUrl = successUrls[service];
+
     try {
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
+        customer_email: email,
         mode: "payment",
-        success_url: `http://localhost:5173/payment-success?session_id={CHECKOUT_SESSION_ID}&service=${encodeURIComponent(service)}&patient=${encodeURIComponent(patient)}`,
+        success_url: `${successUrl}?session_id={CHECKOUT_SESSION_ID}&service=${encodeURIComponent(service)}&guideId=${guideId}`,
         cancel_url: `http://localhost:5173/payment-cancel`,
         line_items: [
           {
