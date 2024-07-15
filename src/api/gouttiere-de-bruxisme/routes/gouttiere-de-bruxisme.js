@@ -1,9 +1,21 @@
-'use strict';
+const { createCoreRouter } = require("@strapi/strapi").factories;
+const defaultRouter = createCoreRouter("api::gouttiere-de-bruxisme.gouttiere-de-bruxisme");
 
-/**
- * gouttiere-de-bruxisme router
- */
+const customRoutes = require("./PaymentRoute");
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+const customRouter = (innerRouter, extraRoutes = []) => {
+  let routes;
+  return {
+    get prefix() {
+      return innerRouter.prefix;
+    },
+    get routes() {
+      if (!routes) {
+        routes = innerRouter.routes.concat(extraRoutes);
+      }
+      return routes;
+    },
+  };
+};
 
-module.exports = createCoreRouter('api::gouttiere-de-bruxisme.gouttiere-de-bruxisme');
+module.exports = customRouter(defaultRouter, customRoutes.routes);
