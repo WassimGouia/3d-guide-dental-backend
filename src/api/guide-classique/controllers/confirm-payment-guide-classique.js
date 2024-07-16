@@ -43,7 +43,7 @@ module.exports = {
         });
 
         const updatedGuide = await strapi.db
-        .query("api::gouttiere-de-bruxisme.gouttiere-de-bruxisme")
+        .query("api::guide-classique.guide-classique")
         .update({
           where: { id: guideId },
           data: {
@@ -54,16 +54,21 @@ module.exports = {
         
 
         const rapport = await strapi.db
-        .query("api::gouttiere-de-bruxisme.gouttiere-de-bruxisme")
+        .query("api::guide-classique.guide-classique")
         .findOne({
           where: { numero_cas: caseNumber },
           populate: {
-            selected_teeth: true,
-            les_options_generiques: {
-              populate: ["Suppression_numerique_de_dents", "Impression_Formlabs"]
+            Full_guidee: true,
+            Forage_pilote: true,
+            Marque_de_la_trousse: true,
+            Clavettes_de_stabilisation: true,
+            marque_implant_pour_la_dent:true,
+            comment:true,
+            options_generiques: {
+              populate: ["Smile_Design", "Impression_Formlabs","Suppression_numerique","title"]
             }
           }
-        });
+          });
       
       console.log("rapport", JSON.stringify(rapport, null, 2));
    
@@ -89,9 +94,11 @@ module.exports = {
             }
           );
 
+          // Update the plan
           const offreService = strapi.service("api::offre.offre");
           const updatedPlan = await offreService.updatePlan(user.id);
 
+          // Link the commande to the offre
           await strapi.entityService.update(
             "api::commande.commande",
             commande.id,
@@ -112,11 +119,9 @@ module.exports = {
           where: { id: service },
         });
         const europeanCountries = ["belgium", "portugal", "germany", "netherlands", "luxembourg", "italy", "spain"];
-        let isActive = false; 
+        let isActive = false; // Initialize isActive variable
 
-        rapport.les_options_generiques.forEach((option) => {
-
-
+        rapport.options_generiques.forEach((option) => {
             option.Impression_Formlabs.forEach((impression) => {
               isActive = impression.active;
             });          
@@ -197,33 +202,53 @@ module.exports = {
       </div>`;
 
       if (rapport) {
-
         emailContent += `
           <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-              <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Rapport Details:</h3>
-              <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Selected Teeth:</strong> ${rapport.selected_teeth.join(',')}</p>
-              <h4 style="margin: 10px 0; color: #000;">Les Options Generiques:</h4>`;
+            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Rapport Details:</h3>
+            <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
+            <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
+            <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
+            
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Marque Implant pour la Dent:</h4>
+            <p style="margin: 10px 0; color: #000;">${Object.entries(
+              rapport.marque_implant_pour_la_dent[" index"]
+            )
+            .map(([key, value]) => `${key}: ${value}`)
+            .join("<br>")}</p>
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Full Guidée:</h4>
+            ${rapport.Full_guidee.map(guide => `<p>- ${guide.titlle}: ${guide.active ? "✔️" : "❌"}</p>`).join("")}
+      
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Forage Pilote:</h4>
+            ${rapport.Forage_pilote.map(forage => `<p>- ${forage.title}: ${forage.active ? "✔️" : "❌"}</p>`).join("")}
+      
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Marque de la Trousse:</h4>
+            ${rapport.Marque_de_la_trousse.map(trousse => `<p>- ${trousse.title}: ${trousse.description || "N/A"}</p>`).join("")}
+      
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Clavettes de Stabilisation:</h4>
+            ${rapport.Clavettes_de_stabilisation.map(clavette => `<p>- ${clavette.title}: ${clavette.active !== null ? (clavette.active ? "✔️" : "❌") : "N/A"} (${clavette.nombre_des_clavettes})</p>`).join("")}
+      
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Options Generiques:</h4>`;
+      
+        rapport.options_generiques.forEach(option => {
 
-              rapport.les_options_generiques.forEach((option) => {
-                option.Suppression_numerique_de_dents.forEach((suppression) => {
-                  const checkIcon = suppression.active ? "✔️" : "❌";
-                  emailContent += `<p>- ${suppression.title} (${suppression.description || 0}) ${checkIcon}</p>`;
-                });
-              
-                if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
-                  option.Impression_Formlabs.forEach((impression) => {
-                    const checkIcon = impression.active ? "✔️" : "❌";
-                    emailContent += `<p>- ${impression.title} (Guide Supplementaire: ${impression.Guide_supplementaire}) ${checkIcon}</p>`;
-                  });
-                }
-                
-              });
-
+          option.Smile_Design.forEach(smileDesign => {
+            emailContent += `<p>- ${smileDesign.title}: ${smileDesign.active ? "✔️" : "❌"}</p>`;
+          });
+      
+          option.Suppression_numerique.forEach(suppression => {
+            emailContent += `<p>- ${suppression.title}: ${suppression.active ? "✔️" : "❌"} (${suppression.description})</p>`;
+          });
+      
+          if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
+            option.Impression_Formlabs.forEach(impression => {
+              emailContent += `<p>- ${impression.title}: ${impression.active ? "✔️" : "❌"} (Guide Supplementaire: ${impression.Guide_supplementaire})</p>`;
+            });
+          }
+        });
+      
         emailContent += `</div>`;
-        }
+      }
+      
         emailContent += `
             <div style="padding: 20px 0; text-align: center; border-top: 2px solid #ffd700;">
                 <p style="margin: 0; color: #000;">Thank you for choosing our service.</p>
