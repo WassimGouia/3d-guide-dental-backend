@@ -38,6 +38,41 @@
     },
     "En_attente_approbation": {
       "type": "boolean"
+    },
+    "en__cours_de_modification": {
+      "type": "boolean"
+    },
+    "soumis": {
+      "type": "boolean"
+    },
+    "approuve": {
+      "type": "boolean"
+    },
+    "produire_expide": {
+      "type": "boolean"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "autres_services_de_conceptions"
+    },
+    "Demande_devis": {
+      "type": "boolean"
+    },
+    "pdfFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"],
+      "ext": ["pdf"]
+    },
+    "model3d": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"],
+      "ext": ["zip", "tar", "rar", "7z"]
     }
   }
 }

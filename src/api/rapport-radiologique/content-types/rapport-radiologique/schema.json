@@ -53,6 +53,20 @@
     },
     "numero_cas": {
       "type": "biginteger"
+    },
+    "pdfFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "rapport_radiologiques"
     }
   }
 }

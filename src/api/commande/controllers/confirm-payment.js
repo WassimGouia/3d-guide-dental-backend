@@ -10,9 +10,8 @@ const getDiscount = (plan) => {
   return discounts[plan] || 0;
 };
 module.exports = {
-  
   async confirmPayment(ctx) {
-    const { sessionId, service, caseNumber,guideId } = ctx.request.body;
+    const { sessionId, service, caseNumber, guideId } = ctx.request.body;
 
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -43,14 +42,19 @@ module.exports = {
         });
 
         const updatedGuide = await strapi.db
-        .query("api::guide-a-etage.guide-a-etage")
-        .update({
-          where: { id: guideId },
-          data: {
-            submit: true,
-            archive: false,
-          },
-        });
+          .query("api::guide-a-etage.guide-a-etage")
+          .update({
+            where: { id: guideId },
+            data: {
+              submit: true,
+              archive: false,
+              En_attente_approbation: true,
+              soumis: true,
+              en__cours_de_modification: false,
+              approuve: false,
+              produire_expide: false,
+            },
+          });
 
         const guide = await strapi.db
           .query("api::guide-a-etage.guide-a-etage")
@@ -72,13 +76,11 @@ module.exports = {
           .query("plugin::users-permissions.user")
           .findOne({
             where: { email: userEmail },
-            populate: ["offre","location"],
+            populate: ["offre", "location"],
           });
 
         if (user && user.offre) {
-          console.log(
-            "location",user.location
-          );
+          console.log("location", user.location);
 
           // Update the offre
           const updatedOffre = await strapi.entityService.update(
@@ -141,7 +143,9 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current Plan: ${
+              user.offre.CurrentPlan
+            } (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -150,7 +154,9 @@ module.exports = {
                         <h4 style="margin: 0;">Invoice to:</h4>
                     </td>
                     <td style="padding-right: 10px;">
-                        <p style="margin: 5px 0;">${session.customer_details.name}</p>
+                        <p style="margin: 5px 0;">${
+                          session.customer_details.name
+                        }</p>
                     </td>
                     <td>
                         <p style="margin: 5px 0;">${email}</p>
@@ -163,7 +169,11 @@ module.exports = {
                         <h4 style="margin: 0;">Shipping Address:</h4>
                     </td>
                     <td style="padding-right: 10px;">
-                        <p style="margin: 5px 0;">${user.location[0].country}, ${user.location[0].city}, ${user.location[0].State}, ${user.location[0].Address}, ${user.location[0].zipCode}</p>
+                        <p style="margin: 5px 0;">${
+                          user.location[0].country
+                        }, ${user.location[0].city}, ${
+          user.location[0].State
+        }, ${user.location[0].Address}, ${user.location[0].zipCode}</p>
                     </td>
                 </tr>
             </table>
@@ -180,10 +190,19 @@ module.exports = {
         </thead>
         <tbody>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">${((commande.cost / (1 - (getDiscount(user.offre.CurrentPlan) / 100))) - (user.location[0].country.toLowerCase() === "france" ? 7 : 15)).toFixed(0)} EUR</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" ? 7: 15} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${
+              services.title
+            }</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${(
+              commande.cost / (1 - getDiscount(user.offre.CurrentPlan) / 100) -
+              (user.location[0].country.toLowerCase() === "france" ? 7 : 15)
+            ).toFixed(0)} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(
+              user.offre.CurrentPlan
+            )} %</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">+ ${
+              user.location[0].country.toLowerCase() === "france" ? 7 : 15
+            } EUR</td>
           </tr>
         </tbody>
       </table>

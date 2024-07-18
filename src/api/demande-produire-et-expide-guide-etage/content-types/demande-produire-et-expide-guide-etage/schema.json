@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demande_produire_et_expide_guide_etages",
+  "info": {
+    "singularName": "demande-produire-et-expide-guide-etage",
+    "pluralName": "demande-produire-et-expide-guide-etages",
+    "displayName": "Demande produire et expidé-Guide Etage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Patient": {
+      "type": "string"
+    },
+    "case_number": {
+      "type": "string"
+    },
+    "type_travail": {
+      "type": "string"
+    },
+    "Immediate_Loading": {
+      "type": "boolean"
+    },
+    "Resin_Impression_of_Both_Stages": {
+      "type": "boolean"
+    },
+    "Metal_Impression_First_Stage": {
+      "type": "boolean"
+    },
+    "Metal_Impression_of_Both_Stages": {
+      "type": "boolean"
+    },
+    "Cost": {
+      "type": "biginteger"
+    }
+  }
+}

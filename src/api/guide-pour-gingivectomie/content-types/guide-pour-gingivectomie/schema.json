@@ -61,6 +61,26 @@
     "produire_expide": {
       "type": "boolean"
     },
+    "pdfFile": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"],
+      "ext": ["pdf"]
+    },
+    "model3d": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"],
+      "ext": ["zip", "tar", "rar", "7z"]
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "guide_pour_gingivectomies" 
+    },
     "selected_teeth": {
       "type": "json"
     }

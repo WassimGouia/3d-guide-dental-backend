@@ -94,6 +94,42 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::commande.commande"
+    },
+    "gouttiere_de_bruxismes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gouttiere-de-bruxisme.gouttiere-de-bruxisme",
+      "mappedBy": "user"
+    },
+    "guide_a_etages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::guide-a-etage.guide-a-etage",
+      "mappedBy": "user"
+    },
+    "guide_classiques": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::guide-classique.guide-classique",
+      "mappedBy": "user"
+    },
+    "guide_pour_gingivectomies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::guide-pour-gingivectomie.guide-pour-gingivectomie",
+      "mappedBy": "user"
+    },
+    "autres_services_de_conceptions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::autres-services-de-conception.autres-services-de-conception",
+      "mappedBy": "user"
+    },
+    "rapport_radiologiques": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rapport-radiologique.rapport-radiologique",
+      "mappedBy": "user"
     }
   }
 }

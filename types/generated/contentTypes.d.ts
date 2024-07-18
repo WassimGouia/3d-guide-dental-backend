@@ -742,6 +742,36 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::commande.commande'
     >;
+    gouttiere_de_bruxismes: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::gouttiere-de-bruxisme.gouttiere-de-bruxisme'
+    >;
+    guide_a_etages: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::guide-a-etage.guide-a-etage'
+    >;
+    guide_classiques: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::guide-classique.guide-classique'
+    >;
+    guide_pour_gingivectomies: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::guide-pour-gingivectomie.guide-pour-gingivectomie'
+    >;
+    autres_services_de_conceptions: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::autres-services-de-conception.autres-services-de-conception'
+    >;
+    rapport_radiologiques: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::rapport-radiologique.rapport-radiologique'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -831,6 +861,18 @@ export interface ApiAutresServicesDeConceptionAutresServicesDeConception
     submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
+    en__cours_de_modification: Attribute.Boolean;
+    soumis: Attribute.Boolean;
+    approuve: Attribute.Boolean;
+    produire_expide: Attribute.Boolean;
+    user: Attribute.Relation<
+      'api::autres-services-de-conception.autres-services-de-conception',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    Demande_devis: Attribute.Boolean;
+    pdfFile: Attribute.Media<'files'>;
+    model3d: Attribute.Media<'files'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -931,6 +973,44 @@ export interface ApiDemandeDeModificationDemandeDeModification
   };
 }
 
+export interface ApiDemandeProduireEtExpideGuideEtageDemandeProduireEtExpideGuideEtage
+  extends Schema.CollectionType {
+  collectionName: 'demande_produire_et_expide_guide_etages';
+  info: {
+    singularName: 'demande-produire-et-expide-guide-etage';
+    pluralName: 'demande-produire-et-expide-guide-etages';
+    displayName: 'Demande produire et expid\u00E9-Guide Etage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Patient: Attribute.String;
+    case_number: Attribute.String;
+    type_travail: Attribute.String;
+    Immediate_Loading: Attribute.Boolean;
+    Resin_Impression_of_Both_Stages: Attribute.Boolean;
+    Metal_Impression_First_Stage: Attribute.Boolean;
+    Metal_Impression_of_Both_Stages: Attribute.Boolean;
+    Cost: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::demande-produire-et-expide-guide-etage.demande-produire-et-expide-guide-etage',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::demande-produire-et-expide-guide-etage.demande-produire-et-expide-guide-etage',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDemandeProduireEtExpideeDemandeProduireEtExpidee
   extends Schema.CollectionType {
   collectionName: 'demande_produire_et_expidees';
@@ -1000,6 +1080,13 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
     approuve: Attribute.Boolean;
     produire_expide: Attribute.Boolean;
     selected_teeth: Attribute.JSON;
+    pdfFile: Attribute.Media<'files'>;
+    model3d: Attribute.Media<'files'>;
+    user: Attribute.Relation<
+      'api::gouttiere-de-bruxisme.gouttiere-de-bruxisme',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1054,6 +1141,18 @@ export interface ApiGuideAEtageGuideAEtage extends Schema.CollectionType {
     patient: Attribute.String;
     submit: Attribute.Boolean;
     archive: Attribute.Boolean;
+    En_attente_approbation: Attribute.Boolean;
+    en__cours_de_modification: Attribute.Boolean;
+    soumis: Attribute.Boolean;
+    approuve: Attribute.Boolean;
+    produire_expide: Attribute.Boolean;
+    pdfFile: Attribute.Media<'files'>;
+    model3d: Attribute.Media<'files'>;
+    user: Attribute.Relation<
+      'api::guide-a-etage.guide-a-etage',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1107,6 +1206,18 @@ export interface ApiGuideClassiqueGuideClassique extends Schema.CollectionType {
     numero_cas: Attribute.BigInteger;
     submit: Attribute.Boolean;
     archive: Attribute.Boolean;
+    En_attente_approbation: Attribute.Boolean;
+    en__cours_de_modification: Attribute.Boolean;
+    soumis: Attribute.Boolean;
+    approuve: Attribute.Boolean;
+    produire_expide: Attribute.Boolean;
+    pdfFile: Attribute.Media<'files'>;
+    model3d: Attribute.Media<'files'>;
+    user: Attribute.Relation<
+      'api::guide-classique.guide-classique',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1156,6 +1267,13 @@ export interface ApiGuidePourGingivectomieGuidePourGingivectomie
     soumis: Attribute.Boolean;
     approuve: Attribute.Boolean;
     produire_expide: Attribute.Boolean;
+    pdfFile: Attribute.Media<'files'>;
+    model3d: Attribute.Media<'files'>;
+    user: Attribute.Relation<
+      'api::guide-pour-gingivectomie.guide-pour-gingivectomie',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     selected_teeth: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1327,6 +1445,12 @@ export interface ApiRapportRadiologiqueRapportRadiologique
     submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     numero_cas: Attribute.BigInteger;
+    pdfFile: Attribute.Media<'files'>;
+    user: Attribute.Relation<
+      'api::rapport-radiologique.rapport-radiologique',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1480,6 +1604,7 @@ declare module '@strapi/types' {
       'api::autres-services-de-conception.autres-services-de-conception': ApiAutresServicesDeConceptionAutresServicesDeConception;
       'api::commande.commande': ApiCommandeCommande;
       'api::demande-de-modification.demande-de-modification': ApiDemandeDeModificationDemandeDeModification;
+      'api::demande-produire-et-expide-guide-etage.demande-produire-et-expide-guide-etage': ApiDemandeProduireEtExpideGuideEtageDemandeProduireEtExpideGuideEtage;
       'api::demande-produire-et-expidee.demande-produire-et-expidee': ApiDemandeProduireEtExpideeDemandeProduireEtExpidee;
       'api::gouttiere-de-bruxisme.gouttiere-de-bruxisme': ApiGouttiereDeBruxismeGouttiereDeBruxisme;
       'api::guide-a-etage.guide-a-etage': ApiGuideAEtageGuideAEtage;
