@@ -40,6 +40,7 @@ module.exports = createCoreController("api::commande.commande", ({ strapi }) => 
       return { stripeSession: session };
     } catch (error) {
       ctx.response.status = 500;
+      console.error("xxxxxxxxxx",error)
       return { error };
     }
   },

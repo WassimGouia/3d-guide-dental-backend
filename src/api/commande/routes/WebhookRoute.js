@@ -7,6 +7,14 @@ module.exports = {
       config: {
         auth: false,
       },
+    },
+    {
+      method: 'POST',
+      path: '/sendEmailToNotify',
+      handler: 'confirm-payment.sendEmailToNotify',
+      config: {
+        auth: false,
+      },
     }
   ],
 };

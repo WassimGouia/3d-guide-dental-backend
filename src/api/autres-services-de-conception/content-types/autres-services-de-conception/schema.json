@@ -30,9 +30,6 @@
     "numero_cas": {
       "type": "biginteger"
     },
-    "submit": {
-      "type": "boolean"
-    },
     "archive": {
       "type": "boolean"
     },
@@ -64,15 +61,31 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["pdf"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "model3d": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["zip", "tar", "rar", "7z"]
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "cout": {
+      "type": "float"
+    },
+    "offre": {
+      "type": "text"
+    },
+    "delivery_number": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "piece_physique_cout": {
+      "type": "float",
+      "default": 0
     }
   }
 }

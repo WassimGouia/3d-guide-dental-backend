@@ -23,6 +23,9 @@
     },
     "patient": {
       "type": "string"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

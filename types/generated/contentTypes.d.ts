@@ -858,7 +858,6 @@ export interface ApiAutresServicesDeConceptionAutresServicesDeConception
     service_impression_et_expedition: Attribute.Boolean;
     patient: Attribute.String;
     numero_cas: Attribute.BigInteger;
-    submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
     en__cours_de_modification: Attribute.Boolean;
@@ -873,6 +872,10 @@ export interface ApiAutresServicesDeConceptionAutresServicesDeConception
     Demande_devis: Attribute.Boolean;
     pdfFile: Attribute.Media<'files'>;
     model3d: Attribute.Media<'files'>;
+    cout: Attribute.Float;
+    offre: Attribute.Text;
+    delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    piece_physique_cout: Attribute.Float & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -909,16 +912,6 @@ export interface ApiCommandeCommande extends Schema.CollectionType {
       'api::service.service'
     >;
     cost: Attribute.BigInteger;
-    patients: Attribute.Relation<
-      'api::commande.commande',
-      'manyToMany',
-      'api::patient.patient'
-    >;
-    offre: Attribute.Relation<
-      'api::commande.commande',
-      'manyToOne',
-      'api::offre.offre'
-    >;
     StripeID: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -980,6 +973,7 @@ export interface ApiDemandeProduireEtExpideGuideEtageDemandeProduireEtExpideGuid
     singularName: 'demande-produire-et-expide-guide-etage';
     pluralName: 'demande-produire-et-expide-guide-etages';
     displayName: 'Demande produire et expid\u00E9-Guide Etage';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -993,6 +987,7 @@ export interface ApiDemandeProduireEtExpideGuideEtageDemandeProduireEtExpideGuid
     Metal_Impression_First_Stage: Attribute.Boolean;
     Metal_Impression_of_Both_Stages: Attribute.Boolean;
     Cost: Attribute.BigInteger;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1028,6 +1023,7 @@ export interface ApiDemandeProduireEtExpideeDemandeProduireEtExpidee
     type_travail: Attribute.String;
     cost: Attribute.BigInteger;
     patient: Attribute.String;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1059,12 +1055,12 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
     draftAndPublish: true;
   };
   attributes: {
-    les_options_generiques: Attribute.Component<
+    options_generiques: Attribute.Component<
       'shared.les-options-generiques-ci-dessous',
       true
     >;
     comment: Attribute.String;
-    cout: Attribute.BigInteger;
+    cout: Attribute.Float;
     service: Attribute.Relation<
       'api::gouttiere-de-bruxisme.gouttiere-de-bruxisme',
       'manyToOne',
@@ -1072,7 +1068,6 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
     >;
     numero_cas: Attribute.BigInteger;
     patient: Attribute.String;
-    submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
     en__cours_de_modification: Attribute.Boolean;
@@ -1087,6 +1082,9 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    offre: Attribute.Text;
+    delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1125,7 +1123,6 @@ export interface ApiGuideAEtageGuideAEtage extends Schema.CollectionType {
     Options_supplementaires: Attribute.Component<'shared.option', true>;
     comment: Attribute.String;
     options_generiques: Attribute.Component<'shared.option', true>;
-    cout: Attribute.Component<'shared.cout', true>;
     Full_guidee: Attribute.Component<'shared.full-guidee', true>;
     Forage_pilote: Attribute.Component<'shared.forage-pilote', true>;
     Marque_de_la_clavette: Attribute.Component<
@@ -1139,7 +1136,6 @@ export interface ApiGuideAEtageGuideAEtage extends Schema.CollectionType {
     marque_implant_pour_la_dent: Attribute.JSON;
     numero_cas: Attribute.BigInteger;
     patient: Attribute.String;
-    submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
     en__cours_de_modification: Attribute.Boolean;
@@ -1153,6 +1149,10 @@ export interface ApiGuideAEtageGuideAEtage extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    offre: Attribute.Text;
+    cout: Attribute.Float;
+    delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1200,11 +1200,9 @@ export interface ApiGuideClassiqueGuideClassique extends Schema.CollectionType {
       true
     >;
     comment: Attribute.String;
-    cout: Attribute.Component<'shared.cout', true>;
     marque_implant_pour_la_dent: Attribute.JSON;
     patient: Attribute.String;
     numero_cas: Attribute.BigInteger;
-    submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
     en__cours_de_modification: Attribute.Boolean;
@@ -1218,6 +1216,10 @@ export interface ApiGuideClassiqueGuideClassique extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    offre: Attribute.Text;
+    cout: Attribute.Float;
+    delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1257,10 +1259,9 @@ export interface ApiGuidePourGingivectomieGuidePourGingivectomie
     options_generiques: Attribute.Component<'shared.options-generiques', true>;
     DICOM: Attribute.Component<'shared.dicom', true>;
     comment: Attribute.String;
-    cout: Attribute.BigInteger;
+    cout: Attribute.Float;
     patient: Attribute.String;
     numero_cas: Attribute.BigInteger;
-    submit: Attribute.Boolean;
     archive: Attribute.Boolean;
     En_attente_approbation: Attribute.Boolean;
     en__cours_de_modification: Attribute.Boolean;
@@ -1275,6 +1276,9 @@ export interface ApiGuidePourGingivectomieGuidePourGingivectomie
       'plugin::users-permissions.user'
     >;
     selected_teeth: Attribute.JSON;
+    offre: Attribute.Text;
+    delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1310,11 +1314,6 @@ export interface ApiOffreOffre extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    commandes: Attribute.Relation<
-      'api::offre.offre',
-      'oneToMany',
-      'api::commande.commande'
-    >;
     CurrentPlan: Attribute.Enumeration<
       ['Essential', 'Privilege', 'Elite', 'Premium']
     > &
@@ -1342,37 +1341,6 @@ export interface ApiOffreOffre extends Schema.CollectionType {
   };
 }
 
-export interface ApiOrderOrder extends Schema.CollectionType {
-  collectionName: 'orders';
-  info: {
-    singularName: 'order';
-    pluralName: 'orders';
-    displayName: 'order';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    paymentId: Attribute.String;
-    coast: Attribute.Float;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiPatientPatient extends Schema.CollectionType {
   collectionName: 'patients';
   info: {
@@ -1391,11 +1359,6 @@ export interface ApiPatientPatient extends Schema.CollectionType {
       'api::patient.patient',
       'oneToMany',
       'api::service.service'
-    >;
-    commandes: Attribute.Relation<
-      'api::patient.patient',
-      'manyToMany',
-      'api::commande.commande'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1442,7 +1405,7 @@ export interface ApiRapportRadiologiqueRapportRadiologique
     Eliminer_une_pathologie: Attribute.Boolean;
     autres: Attribute.Boolean;
     patient: Attribute.String;
-    submit: Attribute.Boolean;
+    soumis: Attribute.Boolean;
     archive: Attribute.Boolean;
     numero_cas: Attribute.BigInteger;
     pdfFile: Attribute.Media<'files'>;
@@ -1451,6 +1414,8 @@ export interface ApiRapportRadiologiqueRapportRadiologique
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    cout: Attribute.Float;
+    originalCost: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1611,7 +1576,6 @@ declare module '@strapi/types' {
       'api::guide-classique.guide-classique': ApiGuideClassiqueGuideClassique;
       'api::guide-pour-gingivectomie.guide-pour-gingivectomie': ApiGuidePourGingivectomieGuidePourGingivectomie;
       'api::offre.offre': ApiOffreOffre;
-      'api::order.order': ApiOrderOrder;
       'api::patient.patient': ApiPatientPatient;
       'api::rapport-radiologique.rapport-radiologique': ApiRapportRadiologiqueRapportRadiologique;
       'api::service.service': ApiServiceService;

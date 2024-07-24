@@ -37,8 +37,6 @@ module.exports = {
             StripeID: session.id,
             cost: session.amount_total / 100,
             services: [service],
-            patients: [],
-            offre: [],
           },
         });
 
@@ -47,7 +45,7 @@ module.exports = {
         .update({
           where: { id: guideId },
           data: {
-            submit: true,
+            soumis: true,
             archive: false,
           },
         });
@@ -59,7 +57,7 @@ module.exports = {
           where: { numero_cas: caseNumber },
           populate: {
             selected_teeth: true,
-            les_options_generiques: {
+            options_generiques: {
               populate: ["Suppression_numerique_de_dents", "Impression_Formlabs"]
             }
           }
@@ -114,7 +112,7 @@ module.exports = {
         const europeanCountries = ["belgium", "portugal", "germany", "netherlands", "luxembourg", "italy", "spain"];
         let isActive = false; 
 
-        rapport.les_options_generiques.forEach((option) => {
+        rapport.options_generiques.forEach((option) => {
 
 
             option.Impression_Formlabs.forEach((impression) => {
@@ -135,7 +133,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current offer: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -176,19 +174,10 @@ module.exports = {
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
             <td style="border: 1px solid #ddd; padding: 10px;">
-              ${(
-                (commande.cost / (1 - getDiscount(user.offre.CurrentPlan) / 100)) -
-                (isActive
-                  ? user.location[0].country.toLowerCase() === "france"
-                    ? 7
-                    : europeanCountries.includes(user.location[0].country.toLowerCase())
-                    ? 15
-                    : 0
-                  : 0)
-              ).toFixed(0)} EUR
+              ${rapport.originalCost} EUR
             </td>
             <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7.5 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
           </tr>
         </tbody>
       </table>
@@ -205,9 +194,9 @@ module.exports = {
               <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
               <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
               <p style="margin: 10px 0; color: #000;"><strong>Selected Teeth:</strong> ${rapport.selected_teeth.join(',')}</p>
-              <h4 style="margin: 10px 0; color: #000;">Les Options Generiques:</h4>`;
+              <h4 style="margin: 10px 0; color: #000;">Generic Options:</h4>`;
 
-              rapport.les_options_generiques.forEach((option) => {
+              rapport.options_generiques.forEach((option) => {
                 option.Suppression_numerique_de_dents.forEach((suppression) => {
                   const checkIcon = suppression.active ? "✔️" : "❌";
                   emailContent += `<p>- ${suppression.title} (${suppression.description || 0}) ${checkIcon}</p>`;
@@ -216,7 +205,7 @@ module.exports = {
                 if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
                   option.Impression_Formlabs.forEach((impression) => {
                     const checkIcon = impression.active ? "✔️" : "❌";
-                    emailContent += `<p>- ${impression.title} (Guide Supplementaire: ${impression.Guide_supplementaire}) ${checkIcon}</p>`;
+                    emailContent += `<p>- ${impression.title} (Supplementary Guide: ${impression.Guide_supplementaire}) ${checkIcon}</p>`;
                   });
                 }
                 
@@ -230,9 +219,9 @@ module.exports = {
             </div> 
             </div>
         </div>`;
-
+        const emails = [email, "ahmed.halouani.92@gmail.com"];
         await strapi.plugins["email"].services.email.send({
-          to: email,
+          to: emails,
           from: "no-reply@3dguidedental.com",
           subject: "Your Invoice from Dental Service",
           text: `Thank you for your payment. Here is your invoice: \n\nOrder ID: ${commande.id}\nTotal Amount: ${commande.cost} EUR\n\nThank you for choosing our service.`,

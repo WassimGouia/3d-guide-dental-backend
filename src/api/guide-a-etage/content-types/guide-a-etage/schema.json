@@ -31,11 +31,6 @@
       "repeatable": true,
       "component": "shared.option"
     },
-    "cout": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.cout"
-    },
     "Full_guidee": {
       "type": "component",
       "repeatable": true,
@@ -65,9 +60,6 @@
     "patient": {
       "type": "string"
     },
-    "submit": {
-      "type": "boolean"
-    },
     "archive": {
       "type": "boolean"
     },
@@ -90,21 +82,36 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["pdf"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "model3d": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["zip", "tar", "rar", "7z"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "guide_a_etages"
+    },
+    "offre": {
+      "type": "text"
+    },
+    "cout": {
+      "type": "float"
+    },
+    "delivery_number": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

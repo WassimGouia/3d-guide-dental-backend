@@ -46,11 +46,6 @@
     "comment": {
       "type": "string"
     },
-    "cout": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.cout"
-    },
     "marque_implant_pour_la_dent": {
       "type": "json"
     },
@@ -59,9 +54,6 @@
     },
     "numero_cas": {
       "type": "biginteger"
-    },
-    "submit": {
-      "type": "boolean"
     },
     "archive": {
       "type": "boolean"
@@ -85,21 +77,36 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["pdf"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "model3d": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["zip", "tar", "rar", "7z"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "guide_classiques"
+    },
+    "offre": {
+      "type": "text"
+    },
+    "cout": {
+      "type": "float"
+    },
+    "delivery_number": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

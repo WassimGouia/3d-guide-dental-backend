@@ -21,18 +21,6 @@
     "cost": {
       "type": "biginteger"
     },
-    "patients": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::patient.patient",
-      "inversedBy": "commandes"
-    },
-    "offre": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::offre.offre",
-      "inversedBy": "commandes"
-    },
     "StripeID": {
       "type": "string"
     }

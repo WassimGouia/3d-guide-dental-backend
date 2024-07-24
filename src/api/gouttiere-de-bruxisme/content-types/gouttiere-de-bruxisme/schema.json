@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "les_options_generiques": {
+    "options_generiques": {
       "displayName": "les options génériques ci-dessous",
       "type": "component",
       "repeatable": true,
@@ -22,7 +22,7 @@
       "type": "string"
     },
     "cout": {
-      "type": "biginteger"
+      "type": "float"
     },
     "service": {
       "type": "relation",
@@ -35,9 +35,6 @@
     },
     "patient": {
       "type": "string"
-    },
-    "submit": {
-      "type": "boolean"
     },
     "archive": {
       "type": "boolean"
@@ -64,21 +61,33 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["pdf"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "model3d": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["zip", "tar", "rar", "7z"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "gouttiere_de_bruxismes"
+    },
+    "offre": {
+      "type": "text"
+    },
+    "delivery_number": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

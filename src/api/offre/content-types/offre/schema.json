@@ -18,15 +18,14 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "offre"
     },
-    "commandes": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::commande.commande",
-      "mappedBy": "offre"
-    },
     "CurrentPlan": {
       "type": "enumeration",
-      "enum": ["Essential", "Privilege", "Elite", "Premium"],
+      "enum": [
+        "Essential",
+        "Privilege",
+        "Elite",
+        "Premium"
+      ],
       "default": "Essential"
     },
     "yearCaseCount": {

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "demande-produire-et-expide-guide-etage",
     "pluralName": "demande-produire-et-expide-guide-etages",
-    "displayName": "Demande produire et expidé-Guide Etage"
+    "displayName": "Demande produire et expidé-Guide Etage",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -34,6 +35,9 @@
     },
     "Cost": {
       "type": "biginteger"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

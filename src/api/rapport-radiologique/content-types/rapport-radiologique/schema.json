@@ -45,7 +45,7 @@
     "patient": {
       "type": "string"
     },
-    "submit": {
+    "soumis": {
       "type": "boolean"
     },
     "archive": {
@@ -67,6 +67,12 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "rapport_radiologiques"
+    },
+    "cout": {
+      "type": "float"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

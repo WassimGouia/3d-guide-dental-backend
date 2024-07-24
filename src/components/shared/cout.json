@@ -1,12 +1,13 @@
 {
   "collectionName": "components_shared_couts",
   "info": {
-    "displayName": "cout"
+    "displayName": "cout",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "cout": {
-      "type": "biginteger"
+      "type": "float"
     }
   }
 }

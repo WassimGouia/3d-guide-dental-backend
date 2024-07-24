@@ -47,7 +47,7 @@ module.exports = {
         .update({
           where: { id: guideId },
           data: {
-            submit: true,
+            soumis: true,
             archive: false,
           },
         });
@@ -140,7 +140,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current offer: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -181,19 +181,10 @@ module.exports = {
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
             <td style="border: 1px solid #ddd; padding: 10px;">
-              ${(
-                (commande.cost / (1 - getDiscount(user.offre.CurrentPlan) / 100)) -
-                (isActive
-                  ? user.location[0].country.toLowerCase() === "france"
-                    ? 7
-                    : europeanCountries.includes(user.location[0].country.toLowerCase())
-                    ? 15
-                    : 0
-                  : 0)
-              ).toFixed(0)} EUR
+              ${rapport.originalCost} EUR
             </td>
             <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7.5 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
           </tr>
         </tbody>
       </table>
@@ -209,42 +200,44 @@ module.exports = {
             <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
             <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
             
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Marque Implant pour la Dent:</h4>
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Implant Brand for the Tooth:</h4>
             <p style="margin: 10px 0; color: #000;">${Object.entries(
               rapport.marque_implant_pour_la_dent[" index"]
             )
             .map(([key, value]) => `${key}: ${value}`)
             .join("<br>")}</p>
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Full Guidée:</h4>
-            ${rapport.Full_guidee.map(guide => `<p>- ${guide.titlle}: ${guide.active ? "✔️" : "❌"}</p>`).join("")}
-      
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Forage Pilote:</h4>
-            ${rapport.Forage_pilote.map(forage => `<p>- ${forage.title}: ${forage.active ? "✔️" : "❌"}</p>`).join("")}
-      
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Marque de la Trousse:</h4>
-            ${rapport.Marque_de_la_trousse.map(trousse => `<p>- ${trousse.title}: ${trousse.description || "N/A"}</p>`).join("")}
-      
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Clavettes de Stabilisation:</h4>
-            ${rapport.Clavettes_de_stabilisation.map(clavette => `<p>- ${clavette.title}: ${clavette.active !== null ? (clavette.active ? "✔️" : "❌") : "N/A"} (${clavette.nombre_des_clavettes})</p>`).join("")}
-      
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Options Generiques:</h4>`;
-      
-        rapport.options_generiques.forEach(option => {
 
-          option.Smile_Design.forEach(smileDesign => {
-            emailContent += `<p>- ${smileDesign.title}: ${smileDesign.active ? "✔️" : "❌"}</p>`;
-          });
-      
-          option.Suppression_numerique.forEach(suppression => {
-            emailContent += `<p>- ${suppression.title}: ${suppression.active ? "✔️" : "❌"} (${suppression.description})</p>`;
-          });
-      
-          if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
-            option.Impression_Formlabs.forEach(impression => {
-              emailContent += `<p>- ${impression.title}: ${impression.active ? "✔️" : "❌"} (Guide Supplementaire: ${impression.Guide_supplementaire})</p>`;
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Full Guided:</h4>
+            ${rapport.Full_guidee.map(guide => `<p>- ${guide.title}: ${guide.active ? "✔️" : "❌"}</p>`).join("")}
+
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Pilot Drilling:</h4>
+            ${rapport.Forage_pilote.map(forage => `<p>- ${forage.title}: ${forage.active ? "✔️" : "❌"}</p>`).join("")}
+
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Kit Brand:</h4>
+            ${rapport.Marque_de_la_trousse.map(trousse => `<p>- ${trousse.title}: ${trousse.description || "N/A"}</p>`).join("")}
+
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Stabilization Keys:</h4>
+            ${rapport.Clavettes_de_stabilisation.map(clavette => `<p>- ${clavette.title}: ${clavette.active !== null ? (clavette.active ? "✔️" : "❌") : "N/A"} (${clavette.nombre_des_clavettes})</p>`).join("")}
+
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Generic Options:</h4>
+            `;
+
+            rapport.options_generiques.forEach(option => {
+              option.Smile_Design.forEach(smileDesign => {
+                emailContent += `<p>- ${smileDesign.title}: ${smileDesign.active ? "✔️" : "❌"}</p>`;
+              });
+
+              option.Digital_Suppression.forEach(suppression => {
+                emailContent += `<p>- ${suppression.title}: ${suppression.active ? "✔️" : "❌"} (${suppression.description})</p>`;
+              });
+
+              if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
+                option.Formlabs_Printing.forEach(impression => {
+                  emailContent += `<p>- ${impression.title}: ${impression.active ? "✔️" : "❌"} (Supplementary Guide: ${impression.Guide_supplementaire})</p>`;
+                });
+              }
             });
-          }
-        });
+
       
         emailContent += `</div>`;
       }
@@ -255,9 +248,9 @@ module.exports = {
             </div> 
             </div>
         </div>`;
-
+        const emails = [email, "ahmed.halouani.92@gmail.com"];
         await strapi.plugins["email"].services.email.send({
-          to: email,
+          to: emails,
           from: "no-reply@3dguidedental.com",
           subject: "Your Invoice from Dental Service",
           text: `Thank you for your payment. Here is your invoice: \n\nOrder ID: ${commande.id}\nTotal Amount: ${commande.cost} EUR\n\nThank you for choosing our service.`,

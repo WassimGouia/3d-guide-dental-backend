@@ -47,7 +47,7 @@ module.exports = {
         .update({
           where: { id: guideId },
           data: {
-            submit: true,
+            soumis: true,
             archive: false,
           },
         });
@@ -136,7 +136,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current offer: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -177,19 +177,10 @@ module.exports = {
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
             <td style="border: 1px solid #ddd; padding: 10px;">
-              ${(
-                (commande.cost / (1 - getDiscount(user.offre.CurrentPlan) / 100)) -
-                (isActive
-                  ? user.location[0].country.toLowerCase() === "france"
-                    ? 7
-                    : europeanCountries.includes(user.location[0].country.toLowerCase())
-                    ? 15
-                    : 0
-                  : 0)
-              ).toFixed(0)} EUR
+              ${rapport.originalCost} EUR
             </td>
             <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">+ ${user.location[0].country.toLowerCase() === "france" && isActive ? 7.5 : europeanCountries.includes(user.location[0].country.toLowerCase()) && isActive ? 15 : 0} EUR</td>
           </tr>
         </tbody>
       </table>
@@ -208,7 +199,7 @@ module.exports = {
             <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">DICOM:</h4>
             ${rapport.DICOM.map(DICOM => `<p>- ${DICOM.title}: ${DICOM.active ? "✔️" : "❌"}</p>`).join("")}
     
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Options Generiques:</h4>`;
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Generic Options:</h4>`;
       
         rapport.options_generiques.forEach(option => {
 
@@ -222,7 +213,7 @@ module.exports = {
       
           if (user && (user.location[0].country?.toLowerCase() === "france" || europeanCountries.includes(user.location[0].country?.toLowerCase()))) {
             option.Impression_Formlabs.forEach(impression => {
-              emailContent += `<p>- ${impression.title}: ${impression.active ? "✔️" : "❌"} (Guide Supplementaire: ${impression.Guide_supplementaire})</p>`;
+              emailContent += `<p>- ${impression.title}: ${impression.active ? "✔️" : "❌"} (Supplementary Guide: ${impression.Guide_supplementaire})</p>`;
             });
           }
         });
@@ -236,9 +227,9 @@ module.exports = {
             </div> 
             </div>
         </div>`;
-
+        const emails = [email, "ahmed.halouani.92@gmail.com"];
         await strapi.plugins["email"].services.email.send({
-          to: email,
+          to: emails,
           from: "no-reply@3dguidedental.com",
           subject: "Your Invoice from Dental Service",
           text: `Thank you for your payment. Here is your invoice: \n\nOrder ID: ${commande.id}\nTotal Amount: ${commande.cost} EUR\n\nThank you for choosing our service.`,

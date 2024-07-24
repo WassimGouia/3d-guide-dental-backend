@@ -9,6 +9,30 @@ const getDiscount = (plan) => {
   };
   return discounts[plan] || 0;
 };
+
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+
+const deleteOldArchivedRecords = async () => {
+  try {
+    const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
+
+    const deletedRecords = await strapi.db.query('api::rapport-radiologique.rapport-radiologique').deleteMany({
+      where: {
+        archive: true,
+        createdAt: { $lte: threeMonthsAgo },
+      },
+    });
+
+    console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
+  } catch (error) {
+    console.error("Error deleting old archived records:", error);
+  }
+};
+
+
+deleteOldArchivedRecords();
+setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
 module.exports = {
   
   async confirmPayment(ctx) {
@@ -36,9 +60,7 @@ module.exports = {
           data: {
             StripeID: session.id,
             cost: session.amount_total / 100,
-            services: [service],
-            patients: [],
-            offre: [],
+            services: [service]
           },
         });
 
@@ -47,7 +69,7 @@ module.exports = {
         .update({
           where: { id: guideId },
           data: {
-            submit: true,
+            soumis: true,
             archive: false,
           },
         });
@@ -123,7 +145,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current Plan: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current offer: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -162,7 +184,7 @@ module.exports = {
         <tbody>
           <tr>
             <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">${((commande.cost / (1 - (getDiscount(user.offre.CurrentPlan) / 100)))).toFixed(0)} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${rapport.originalCost} EUR</td>
             <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
           </tr>
         </tbody>
@@ -187,11 +209,11 @@ module.exports = {
               <p style="margin: 10px 0; color: #000;"><strong>Second Comment:</strong> ${rapport.second_comment}</p>
               
               <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options:</h4>
-              <p style="margin: 10px 0; color: #000;"><strong>Implantation prévue:</strong> ${getBooleanIcon(rapport.Implantation_prevue)}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Évaluer implant existant:</strong> ${getBooleanIcon(rapport.Evaluer_implant_existant)}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Évaluation de l'ATM:</strong> ${getBooleanIcon(rapport.Evaluation_de_ATM)}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Éliminer une pathologie:</strong> ${getBooleanIcon(rapport.Eliminer_une_pathologie)}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Autres:</strong> ${getBooleanIcon(rapport.autres)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Planned Implantation:</strong> ${getBooleanIcon(rapport.Implantation_prevue)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Evaluate Existing Implant:</strong> ${getBooleanIcon(rapport.Evaluer_implant_existant)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>TMJ Evaluation:</strong> ${getBooleanIcon(rapport.Evaluation_de_ATM)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Eliminate Pathology:</strong> ${getBooleanIcon(rapport.Eliminer_une_pathologie)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Others:</strong> ${getBooleanIcon(rapport.autres)}</p>
           </div>`;
       }
       
@@ -201,9 +223,9 @@ module.exports = {
             </div>
             </div>
         </div>`;
-
+        const emails = [email, "ahmed.halouani.92@gmail.com"];
         await strapi.plugins["email"].services.email.send({
-          to: email,
+          to: emails,
           from: "no-reply@3dguidedental.com",
           subject: "Your Invoice from Dental Service",
           text: `Thank you for your payment. Here is your invoice: \n\nOrder ID: ${commande.id}\nTotal Amount: ${commande.cost} EUR\n\nThank you for choosing our service.`,

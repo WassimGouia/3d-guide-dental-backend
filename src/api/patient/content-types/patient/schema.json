@@ -25,12 +25,6 @@
       "relation": "oneToMany",
       "target": "api::service.service",
       "mappedBy": "patient"
-    },
-    "commandes": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::commande.commande",
-      "mappedBy": "patients"
     }
   }
 }

@@ -9,14 +9,39 @@ const getDiscount = (plan) => {
   };
   return discounts[plan] || 0;
 };
+
+// const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+// const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+
+// const deleteOldArchivedRecords = async () => {
+//   try {
+//     const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
+
+//     const deletedRecords = await strapi.db.query('api::rapport-radiologique.rapport-radiologique').deleteMany({
+//       where: {
+//         archive: true,
+//         createdAt: { $lte: threeMonthsAgo },
+//       },
+//     });
+
+//     console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
+//   } catch (error) {
+//     console.error("Error deleting old archived records:", error);
+//   }
+// };
+
+
+// deleteOldArchivedRecords();
+// setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
 module.exports = {
+  
   async confirmPayment(ctx) {
-    const { sessionId, service, caseNumber, guideId } = ctx.request.body;
+    const { sessionId, service, caseNumber,guideId } = ctx.request.body;
 
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-      if (session.payment_status === "paid") { 
+      if (session.payment_status === "paid") {
         const existingCommande = await strapi.db
           .query("api::commande.commande")
           .findOne({
@@ -40,32 +65,21 @@ module.exports = {
         });
 
         const updatedGuide = await strapi.db
-          .query("api::guide-a-etage.guide-a-etage")
-          .update({
-            where: { id: guideId },
-            data: {
-              archive: false,
-              En_attente_approbation: false,
-              soumis: true,
-              en__cours_de_modification: false,
-              approuve: false,
-              produire_expide: false,
-            },
-          });
+        .query("api::autres-services-de-conception.autres-services-de-conception")
+        .update({
+          where: { id: guideId },
+          data: {
+            soumis: true,
+            archive: false,
+            Demande_devis:false
+          },
+        });
+        
 
-        const guide = await strapi.db
-          .query("api::guide-a-etage.guide-a-etage")
+        const rapport = await strapi.db
+          .query("api::autres-services-de-conception.autres-services-de-conception")
           .findOne({
-            where: { numero_cas: caseNumber },
-            populate: [
-              "Options_supplementaires",
-              "options_generiques",
-              "cout",
-              "Full_guidee",
-              "Forage_pilote",
-              "Marque_de_la_clavette",
-              "Marque_de_la_trousse",
-            ],
+            where: { numero_cas: caseNumber }
           });
 
         const userEmail = session.customer_details.email;
@@ -73,12 +87,11 @@ module.exports = {
           .query("plugin::users-permissions.user")
           .findOne({
             where: { email: userEmail },
-            populate: ["offre", "location"],
+            populate: ["offre","location"],
           });
 
         if (user && user.offre) {
-          console.log("location", user.location);
-
+          
           // Update the offre
           const updatedOffre = await strapi.entityService.update(
             "api::offre.offre",
@@ -91,19 +104,9 @@ module.exports = {
             }
           );
 
-          console.log(
-            "After case count update - Offre:",
-            JSON.stringify(updatedOffre, null, 2)
-          );
-
           // Update the plan
           const offreService = strapi.service("api::offre.offre");
           const updatedPlan = await offreService.updatePlan(user.id);
-
-          console.log(
-            "After plan update - Plan:",
-            JSON.stringify(updatedPlan, null, 2)
-          );
 
           // Link the commande to the offre
           await strapi.entityService.update(
@@ -140,9 +143,7 @@ module.exports = {
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <h4>Order ID: ${commande.id}</h4>
-            <h4>Current offer: ${
-              user.offre.CurrentPlan
-            } (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
+            <h4>Current offer: ${user.offre.CurrentPlan} (Discount: ${getDiscount(user.offre.CurrentPlan)}%)</h4>
         </div>
         <div style="padding: 20px 0; border-bottom: 1px solid #ddd;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
@@ -151,9 +152,7 @@ module.exports = {
                         <h4 style="margin: 0;">Invoice to:</h4>
                     </td>
                     <td style="padding-right: 10px;">
-                        <p style="margin: 5px 0;">${
-                          session.customer_details.name
-                        }</p>
+                        <p style="margin: 5px 0;">${session.customer_details.name}</p>
                     </td>
                     <td>
                         <p style="margin: 5px 0;">${email}</p>
@@ -166,11 +165,7 @@ module.exports = {
                         <h4 style="margin: 0;">Shipping Address:</h4>
                     </td>
                     <td style="padding-right: 10px;">
-                        <p style="margin: 5px 0;">${
-                          user.location[0].country
-                        }, ${user.location[0].city}, ${
-          user.location[0].State
-        }, ${user.location[0].Address}, ${user.location[0].zipCode}</p>
+                        <p style="margin: 5px 0;">${user.location[0].country}, ${user.location[0].city}, ${user.location[0].State}, ${user.location[0].Address}, ${user.location[0].zipCode}</p>
                     </td>
                 </tr>
             </table>
@@ -182,21 +177,13 @@ module.exports = {
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Service</th>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Amount</th>
             <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Discount</th>
-            <th style="border: 1px solid #ddd; padding: 10px; background: #ffd700; color: #000;">Delivery</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="border: 1px solid #ddd; padding: 10px;">${
-              services.title
-            }</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">${guide.originalCost} EUR</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(
-              user.offre.CurrentPlan
-            )} %</td>
-            <td style="border: 1px solid #ddd; padding: 10px;">+ ${
-              user.location[0].country.toLowerCase() === "france" ? 7.5 : 15
-            } EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${services.title}</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">${rapport.cout} EUR</td>
+            <td style="border: 1px solid #ddd; padding: 10px;">- ${getDiscount(user.offre.CurrentPlan)} %</td>
           </tr>
         </tbody>
       </table>
@@ -204,68 +191,31 @@ module.exports = {
         <h4>Total Amount: ${commande.cost} EUR</h4>
       </div>`;
 
-        if (guide) {
-          const checkIcon = "✔️";
-          const xIcon = "❌";
-
-          const getOptionIcons = (options) => {
-            return options
-              .map(
-                (option) =>
-                  `${option.title}: ${option.active ? checkIcon : xIcon}`
-              )
-              .join("<br>");
-          };
-
-          const getComponentIcons = (components) => {
-            return components
-              .map((component) => `${component.active ? checkIcon : xIcon}`)
-              .join(" ");
-          };
-
-          emailContent += `
-        <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Guide Details:</h3>
-            <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${
-              guide.numero_cas
-            }</p>
-            <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${
-              guide.patient
-            }</p>
-            <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${
-              guide.comment
-            }</p>
-            
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Additional Options:</h4>
-            <p style="margin: 10px 0; color: #000;">${getOptionIcons(guide.Options_supplementaires)}</p>
-
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Generic Options:</h4>
-            <p style="margin: 10px 0; color: #000;">${getOptionIcons(guide.options_generiques)}</p>
-
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Full Guided: ${getComponentIcons(guide.Full_guidee)}</h4>
-
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Pilot Drilling: ${getComponentIcons(guide.Forage_pilote)}</h4>
-
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Key Mark: ${guide.Marque_de_la_clavette.map((mc) => `${mc.description}`)}</h4>
-
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Kit Mark: ${guide.Marque_de_la_trousse.map((mt) => `${mt.description}`)}</h4>
-
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Implant Brand for the Tooth:</h4>
-            <p style="margin: 10px 0; color: #000;">${Object.entries(guide.marque_implant_pour_la_dent["index"])
-              .map(([key, value]) => `${key}: ${value}`)
-              .join("<br>")}</p>
-
-        </div>`;
-        }
-
+      if (rapport) {
+        const checkIcon = "✔️";
+        const xIcon = "❌";
+      
+        const getBooleanIcon = (value) => (value ? checkIcon : xIcon);
+      
+        emailContent += `
+          <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
+              <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Rapport Details:</h3>
+              <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
+              
+              <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options:</h4>
+              <p style="margin: 10px 0; color: #000;"><strong>Planned implantation:</strong> ${getBooleanIcon(rapport.service_impression_et_expedition)}</p>
+          </div>`;
+      }
+      
         emailContent += `
             <div style="padding: 20px 0; text-align: center; border-top: 2px solid #ffd700;">
                 <p style="margin: 0; color: #000;">Thank you for choosing our service.</p>
             </div>
             </div>
         </div>`;
-        const emails = [email, "ahmed.halouani.92@gmail.com"];
-
+        const emails = [email, "hamedtriki5@gmail.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",
@@ -283,22 +233,5 @@ module.exports = {
       ctx.response.status = 500;
       return { error: `Failed to confirm payment: ${error.message}` };
     }
-  },
-
-  async sendEmailToNotify(ctx) {
-    const { email, content, subject } = ctx.request.body;
-  
-    try {
-      await strapi.plugins["email"].services.email.send({
-        to: email,  // Use the email provided in the request body
-        from: "no-reply@3dguidedental.com",
-        subject: subject || "Default Subject",  // Use the subject from the request body or a default value
-        text: content || "Default content",  // Use the content from the request body or a default value
-      });
-      ctx.send({ message: "Email sent successfully" });
-    } catch (error) {
-      ctx.send({ message: "Failed to send email", error: error.message }, 500);
-    }
   }
-  
 };

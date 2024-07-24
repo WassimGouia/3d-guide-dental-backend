@@ -32,16 +32,13 @@
       "type": "string"
     },
     "cout": {
-      "type": "biginteger"
+      "type": "float"
     },
     "patient": {
       "type": "string"
     },
     "numero_cas": {
       "type": "biginteger"
-    },
-    "submit": {
-      "type": "boolean"
     },
     "archive": {
       "type": "boolean"
@@ -65,24 +62,36 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["pdf"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "model3d": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["files"],
-      "ext": ["zip", "tar", "rar", "7z"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "guide_pour_gingivectomies" 
+      "inversedBy": "guide_pour_gingivectomies"
     },
     "selected_teeth": {
       "type": "json"
+    },
+    "offre": {
+      "type": "text"
+    },
+    "delivery_number": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "originalCost": {
+      "type": "float"
     }
   }
 }

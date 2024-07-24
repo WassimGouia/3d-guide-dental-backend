@@ -47,9 +47,10 @@ export interface SharedCout extends Schema.Component {
   collectionName: 'components_shared_couts';
   info: {
     displayName: 'cout';
+    description: '';
   };
   attributes: {
-    cout: Attribute.BigInteger;
+    cout: Attribute.Float;
   };
 }
 
