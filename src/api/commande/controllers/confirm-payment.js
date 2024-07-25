@@ -9,6 +9,32 @@ const getDiscount = (plan) => {
   };
   return discounts[plan] || 0;
 };
+
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+
+const deleteOldArchivedRecords = async () => {
+  try {
+    const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
+
+    const deletedRecords = await strapi.db.query('api::guide-a-etage.guide-a-etage').deleteMany({
+      where: {
+        archive: true,
+        createdAt: { $lte: threeMonthsAgo },
+      },
+    });
+
+    console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
+  } catch (error) {
+    console.error("Error deleting old archived records:", error);
+  }
+};
+
+
+deleteOldArchivedRecords();
+setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
+
+
 module.exports = {
   async confirmPayment(ctx) {
     const { sessionId, service, caseNumber, guideId } = ctx.request.body;
@@ -246,12 +272,14 @@ module.exports = {
 
             <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Pilot Drilling: ${getComponentIcons(guide.Forage_pilote)}</h4>
 
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Key Mark: ${guide.Marque_de_la_clavette.map((mc) => `${mc.description}`)}</h4>
+            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Key Mark: </h4>
+            <p>${guide.Marque_de_la_clavette.map((mc) => `${mc.description}`)}</p>
 
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Kit Mark: ${guide.Marque_de_la_trousse.map((mt) => `${mt.description}`)}</h4>
+            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Kit Mark: </h4>
+            <p>${guide.Marque_de_la_trousse.map((mt) => `${mt.description}`)}</p>
 
             <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Implant Brand for the Tooth:</h4>
-            <p style="margin: 10px 0; color: #000;">${Object.entries(guide.marque_implant_pour_la_dent["index"])
+            <p style="margin: 10px 0; color: #000;">${Object.entries(guide.marque_implant_pour_la_dent[" index"])
               .map(([key, value]) => `${key}: ${value}`)
               .join("<br>")}</p>
 
@@ -264,7 +292,7 @@ module.exports = {
             </div>
             </div>
         </div>`;
-        const emails = [email, "ahmed.halouani.92@gmail.com"];
+        const emails = [email, "no-reply@3dguidedental.com"];
 
         await strapi.plugins["email"].services.email.send({
           to: emails,

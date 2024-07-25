@@ -10,7 +10,7 @@ const getDiscount = (plan) => {
 };
 module.exports = {
   async confirmPayment(ctx) {
-    const { sessionId, type_travail, caseNumber, patient,offre,originalCost } = ctx.request.body;
+    const { sessionId, type_travail, caseNumber, patient,offre,originalCost,numberOfPieces } = ctx.request.body;
 
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -143,7 +143,9 @@ module.exports = {
             <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${
               patient
             }</p>
-            
+            <p style="margin: 10px 0; color: #000;"><strong>Supplementary Guide:</strong> ${
+              numberOfPieces
+            }</p>
         </div>`;
         
 
@@ -153,7 +155,7 @@ module.exports = {
             </div>
             </div>
         </div>`;
-        const emails = [email, "hamedtriki5@gmail.com"];
+        const emails = [email, "no-reply@3dguidedental.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",

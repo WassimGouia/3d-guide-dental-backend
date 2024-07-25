@@ -10,29 +10,31 @@ const getDiscount = (plan) => {
   return discounts[plan] || 0;
 };
 
-// const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-// const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
 
-// const deleteOldArchivedRecords = async () => {
-//   try {
-//     const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
+const deleteOldArchivedRecords = async () => {
+  try {
+    const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
 
-//     const deletedRecords = await strapi.db.query('api::rapport-radiologique.rapport-radiologique').deleteMany({
-//       where: {
-//         archive: true,
-//         createdAt: { $lte: threeMonthsAgo },
-//       },
-//     });
+    const deletedRecords = await strapi.db.query('api::autres-services-de-conception.autres-services-de-conception').deleteMany({
+      where: {
+        archive: true,
+        createdAt: { $lte: threeMonthsAgo },
+      },
+    });
 
-//     console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
-//   } catch (error) {
-//     console.error("Error deleting old archived records:", error);
-//   }
-// };
+    console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
+  } catch (error) {
+    console.error("Error deleting old archived records:", error);
+  }
+};
 
 
-// deleteOldArchivedRecords();
-// setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
+deleteOldArchivedRecords();
+setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
+
+
 module.exports = {
   
   async confirmPayment(ctx) {
@@ -215,7 +217,7 @@ module.exports = {
             </div>
             </div>
         </div>`;
-        const emails = [email, "hamedtriki5@gmail.com"];
+        const emails = [email, "no-reply@3dguidedental.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",

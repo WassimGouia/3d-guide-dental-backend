@@ -9,6 +9,32 @@ const getDiscount = (plan) => {
   };
   return discounts[plan] || 0;
 };
+
+const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+
+const deleteOldArchivedRecords = async () => {
+  try {
+    const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
+
+    const deletedRecords = await strapi.db.query('api::gouttiere-de-bruxisme.gouttiere-de-bruxisme').deleteMany({
+      where: {
+        archive: true,
+        createdAt: { $lte: threeMonthsAgo },
+      },
+    });
+
+    console.log(`Deleted ${deletedRecords.count} archived records older than three months.`);
+  } catch (error) {
+    console.error("Error deleting old archived records:", error);
+  }
+};
+
+
+deleteOldArchivedRecords();
+setInterval(deleteOldArchivedRecords, ONE_DAY_IN_MS);
+
+
 module.exports = {
   
   async confirmPayment(ctx) {
@@ -189,7 +215,7 @@ module.exports = {
 
         emailContent += `
           <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-              <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Rapport Details:</h3>
+              <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Report Details:</h3>
               <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
               <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
               <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
@@ -219,7 +245,7 @@ module.exports = {
             </div> 
             </div>
         </div>`;
-        const emails = [email, "ahmed.halouani.92@gmail.com"];
+        const emails = [email, "no-reply@3dguidedental.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",
