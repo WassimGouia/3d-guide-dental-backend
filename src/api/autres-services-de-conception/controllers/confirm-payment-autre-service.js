@@ -207,7 +207,7 @@ module.exports = {
               <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
               
               <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Options:</h4>
-              <p style="margin: 10px 0; color: #000;"><strong>Planned implantation:</strong> ${getBooleanIcon(rapport.service_impression_et_expedition)}</p>
+              <p style="margin: 10px 0; color: #000;"><strong>Printing and shipping:</strong> ${getBooleanIcon(rapport.service_impression_et_expedition)}</p>
           </div>`;
       }
       

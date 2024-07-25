@@ -171,7 +171,7 @@ module.exports = {
             </div>
             </div>
         </div>`;
-        const emails = [email, "hamedtriki5@gmail.com"];
+        const emails = [email, "no-reply@3dguidedental.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",

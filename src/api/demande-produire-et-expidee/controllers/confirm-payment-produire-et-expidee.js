@@ -143,9 +143,11 @@ module.exports = {
             <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${
               patient
             }</p>
+            ${numberOfPieces === null ? "" : `
             <p style="margin: 10px 0; color: #000;"><strong>Supplementary Guide:</strong> ${
               numberOfPieces
             }</p>
+            `}
         </div>`;
         
 
