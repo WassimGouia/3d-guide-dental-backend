@@ -12,43 +12,30 @@ module.exports = ({ env }) => ({
     },
   },
   upload: {
+    // Add this line
     config: {
-      provider: "local",
+      provider: "aws-s3",
       providerOptions: {
-        sizeLimit: 100 * 1024 * 1024, // 100mb in bytes
-      },
-      breakpoints: {
-        xlarge: 1920,
-        large: 1000,
-        medium: 750,
-        small: 500,
-        xsmall: 64,
-      },
-      actionOptions: {
-        upload: {
-          allowedTypes: {
-            pdfFile: ["application/pdf"],
-            model3d: [
-              "application/zip",
-              "application/x-tar",
-              "application/x-rar-compressed",
-              "application/x-7z-compressed",
-            ],
-          },
-          fileExtensions: {
-            pdfFile: ["pdf"],
-            model3d: ["zip", "tar", "rar", "7z"],
-          },
+        accessKeyId: env("AWS_ACCESS_KEY_ID"),
+        secretAccessKey: env("AWS_ACCESS_SECRET"),
+        region: env("AWS_REGION"),
+        params: {
+          Bucket: env("AWS_BUCKET"),
         },
       },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
     },
-  },
+  }, // Add this line
   "users-permissions": {
     config: {
       email: {
         enable: true,
-        email_confirmation: true, // Enable email confirmation requirement
-        email_confirmation_redirection: "http://localhost:5173/cabinet", // Adjust as necessary
+        email_confirmation: true,
+        email_confirmation_redirection: "http://localhost:5173/cabinet",
       },
     },
   },

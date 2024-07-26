@@ -87,5 +87,16 @@
       "type": "float",
       "default": 0
     }
+    ,
+    "User_Upload": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
   }
 }

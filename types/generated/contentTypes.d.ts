@@ -875,6 +875,7 @@ export interface ApiAutresServicesDeConceptionAutresServicesDeConception
     offre: Attribute.Text;
     delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     piece_physique_cout: Attribute.Float & Attribute.DefaultTo<0>;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1084,6 +1085,7 @@ export interface ApiGouttiereDeBruxismeGouttiereDeBruxisme
     offre: Attribute.Text;
     delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     originalCost: Attribute.Float;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1152,6 +1154,7 @@ export interface ApiGuideAEtageGuideAEtage extends Schema.CollectionType {
     cout: Attribute.Float;
     delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     originalCost: Attribute.Float;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1219,6 +1222,7 @@ export interface ApiGuideClassiqueGuideClassique extends Schema.CollectionType {
     cout: Attribute.Float;
     delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     originalCost: Attribute.Float;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1278,6 +1282,7 @@ export interface ApiGuidePourGingivectomieGuidePourGingivectomie
     offre: Attribute.Text;
     delivery_number: Attribute.BigInteger & Attribute.DefaultTo<'0'>;
     originalCost: Attribute.Float;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1415,6 +1420,7 @@ export interface ApiRapportRadiologiqueRapportRadiologique
     >;
     cout: Attribute.Float;
     originalCost: Attribute.Float;
+    User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
