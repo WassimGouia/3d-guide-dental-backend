@@ -73,17 +73,20 @@
     },
     "originalCost": {
       "type": "float"
-    }
-    ,
+    },
     "User_Upload": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "other_description": {
+      "type": "text"
     }
   }
 }

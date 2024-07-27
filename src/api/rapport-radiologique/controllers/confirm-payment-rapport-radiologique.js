@@ -12,9 +12,43 @@ const getDiscount = (plan) => {
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 const THREE_MONTHS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
+const notifyUsersBeforeDeletion = async () => {
+  try {
+    const threeDaysFromNow = new Date(Date.now() - THREE_MONTHS_IN_MS + THREE_DAYS_IN_MS);
+    const recordsToBeDeleted = await strapi.db.query('api::rapport-radiologique.rapport-radiologique').findMany({
+      where: {
+        archive: true,
+        createdAt: { $lte: threeDaysFromNow },
+      },
 
+      populate: ['user'],
+    });
+
+    for (const record of recordsToBeDeleted) {
+      const userEmail = record.user.email;
+      
+      await strapi.plugins["email"].services.email.send({
+        to: userEmail,
+        from: "no-reply@3dguidedental.com",
+        subject: "Action Required: Your Archived Record Will Be Deleted",
+        text: `Dear User,
+
+        Your archived record created on ${record.createdAt} will be deleted in 3 days. Please take the necessary action if you wish to keep it.
+
+        Best regards,
+        3d Guide Dental`
+      });
+
+      console.log(`Notified user ${userEmail} about the upcoming deletion of their archived record.`);
+    }
+  } catch (error) {
+    console.error("Error notifying users about upcoming deletions:", error);
+  }
+};
 const deleteOldArchivedRecords = async () => {
   try {
+    await notifyUsersBeforeDeletion()
     const threeMonthsAgo = new Date(Date.now() - THREE_MONTHS_IN_MS);
 
     const deletedRecords = await strapi.db.query('api::rapport-radiologique.rapport-radiologique').deleteMany({
@@ -215,7 +249,9 @@ module.exports = {
               <p style="margin: 10px 0; color: #000;"><strong>Evaluate Existing Implant:</strong> ${getBooleanIcon(rapport.Evaluer_implant_existant)}</p>
               <p style="margin: 10px 0; color: #000;"><strong>TMJ Evaluation:</strong> ${getBooleanIcon(rapport.Evaluation_de_ATM)}</p>
               <p style="margin: 10px 0; color: #000;"><strong>Eliminate Pathology:</strong> ${getBooleanIcon(rapport.Eliminer_une_pathologie)}</p>
-              <p style="margin: 10px 0; color: #000;"><strong>Others:</strong> ${getBooleanIcon(rapport.autres)}</p>
+              ${
+                rapport.autres ? `<p style="margin: 10px 0; color: #000;"><strong>Others:</strong>${rapport.other_description}</p>` : ""
+              }
           </div>`;
       }
       
@@ -225,7 +261,7 @@ module.exports = {
             </div>
             </div>
         </div>`;
-        const emails = [email, "no-reply@3dguidedental.com"];
+        const emails = [email, "postmaster@3dguidedental.com"];
         await strapi.plugins["email"].services.email.send({
           to: emails,
           from: "no-reply@3dguidedental.com",

@@ -1421,6 +1421,7 @@ export interface ApiRapportRadiologiqueRapportRadiologique
     cout: Attribute.Float;
     originalCost: Attribute.Float;
     User_Upload: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    other_description: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

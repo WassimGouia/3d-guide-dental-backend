@@ -3,7 +3,7 @@ module.exports = {
     const { result } = event;
 
 
-    if (result.updatedBy && result.updatedBy.email === 'admin@admin.com') {
+    if (result.updatedBy && result.updatedBy.email === 'administration@3dguidedental.com') {
       try {
         const updatedEntry = await strapi.entityService.findOne(
           'api::guide-a-etage.guide-a-etage',
