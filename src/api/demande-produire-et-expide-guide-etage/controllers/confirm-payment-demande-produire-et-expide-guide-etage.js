@@ -142,7 +142,7 @@ module.exports = {
       </div>`;
           emailContent += `
         <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Guide Details:</h3>
+            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Case Details:</h3>
             <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${
               caseNumber
             }</p>

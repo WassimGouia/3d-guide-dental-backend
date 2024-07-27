@@ -285,7 +285,7 @@ module.exports = {
 
           emailContent += `
         <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Guide Details:</h3>
+            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Case Details:</h3>
             <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${
               guide.numero_cas
             }</p>
@@ -306,17 +306,16 @@ module.exports = {
 
             <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Pilot Drilling: ${getComponentIcons(guide.Forage_pilote)}</h4>
 
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Key Mark: </h4>
+            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Brand of the lateral pin(s): </h4>
             <p>${guide.Marque_de_la_clavette.map((mc) => `${mc.description}`)}</p>
 
-            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Kit Mark: </h4>
+            <h4 style="color: #000; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Brand of the surgical kit used: </h4>
             <p>${guide.Marque_de_la_trousse.map((mt) => `${mt.description}`)}</p>
 
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Implant Brand for the Tooth:</h4>
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Brand of the implant for the tooth: </h4>
             <p style="margin: 10px 0; color: #000;">${Object.entries(guide.marque_implant_pour_la_dent[" index"])
               .map(([key, value]) => `${key}: ${value}`)
               .join("<br>")}</p>
-
         </div>`;
         }
 

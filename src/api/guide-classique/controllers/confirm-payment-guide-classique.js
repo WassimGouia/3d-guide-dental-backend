@@ -255,7 +255,7 @@ module.exports = {
       if (rapport) {
         emailContent += `
           <div style="padding: 20px 0; border-top: 2px solid #ffd700;">
-            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Report Details:</h3>
+            <h3 style="color: #000; border-bottom: 1px solid #ddd; padding-bottom: 10px;">Case Details:</h3>
             <p style="margin: 10px 0; color: #000;"><strong>Case Number:</strong> ${rapport.numero_cas}</p>
             <p style="margin: 10px 0; color: #000;"><strong>Patient:</strong> ${rapport.patient}</p>
             <p style="margin: 10px 0; color: #000;"><strong>Comment:</strong> ${rapport.comment}</p>
@@ -276,7 +276,7 @@ module.exports = {
             <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Kit Brand:</h4>
             ${rapport.Marque_de_la_trousse.map(trousse => `<p>- ${trousse.title}: ${trousse.description || "N/A"}</p>`).join("")}
 
-            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Stabilization Keys:</h4>
+            <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Stabilization pins:</h4>
             ${rapport.Clavettes_de_stabilisation.map(clavette => `<p>- ${clavette.title}: ${clavette.active !== null ? (clavette.active ? "✔️" : "❌") : "N/A"} (${clavette.nombre_des_clavettes})</p>`).join("")}
 
             <h4 style="color: #000; margin-top: 20px; padding-bottom: 10px;">Generic Options:</h4>
