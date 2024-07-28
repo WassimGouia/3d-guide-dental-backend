@@ -35,7 +35,7 @@ module.exports = ({ env }) => ({
       email: {
         enable: true,
         email_confirmation: true,
-        email_confirmation_redirection: "http://localhost:5173/cabinet",
+        email_confirmation_redirection: "http://92.222.101.80:3000/cabinet",
       },
     },
   },
