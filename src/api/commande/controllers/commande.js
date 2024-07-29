@@ -6,12 +6,12 @@ module.exports = createCoreController("api::commande.commande", ({ strapi }) => 
   async create(ctx) {
     const { cost,service,email,guideId } = ctx.request.body;
     const successUrls = {
-      1: 'http://localhost:5173/service1-success',
-      2: 'http://localhost:5173/service2-success',
-      3: 'http://localhost:5173/service3-success',
-      4: 'http://localhost:5173/service4-success',
-      5: 'http://localhost:5173/service5-success',
-      6: 'http://localhost:5173/service6-success',
+      1: 'https://dentist-portal.3dguidedental.com/service1-success',
+      2: 'https://dentist-portal.3dguidedental.com/service2-success',
+      3: 'https://dentist-portal.3dguidedental.com/service3-success',
+      4: 'https://dentist-portal.3dguidedental.com/service4-success',
+      5: 'https://dentist-portal.3dguidedental.com/service5-success',
+      6: 'https://dentist-portal.3dguidedental.com/service6-success',
     };
 
     const successUrl = successUrls[service];
@@ -22,7 +22,7 @@ module.exports = createCoreController("api::commande.commande", ({ strapi }) => 
         customer_email: email,
         mode: "payment",
         success_url: `${successUrl}?session_id={CHECKOUT_SESSION_ID}&service=${encodeURIComponent(service)}&guideId=${guideId}`,
-        cancel_url: `http://localhost:5173/payment-cancel`,
+        cancel_url: `https://dentist-portal.3dguidedental.com/payment-cancel`,
         line_items: [
           {
             price_data: {

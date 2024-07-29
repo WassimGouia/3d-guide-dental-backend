@@ -10,8 +10,8 @@ module.exports = createCoreController("api::demande-produire-et-expide-guide-eta
         payment_method_types: ["card"],
         customer_email: email,
         mode: "payment",
-        success_url: `http://localhost:5173/service8-success?session_id={CHECKOUT_SESSION_ID}&patient=${encodeURIComponent(patient)}&caseNumber=${encodeURIComponent(caseNumber)}&type_travail=${encodeURIComponent(type_travail)}`,
-        cancel_url: `http://localhost:5173/payment-cancel`,
+        success_url: `https://dentist-portal.3dguidedental.com/service8-success?session_id={CHECKOUT_SESSION_ID}&patient=${encodeURIComponent(patient)}&caseNumber=${encodeURIComponent(caseNumber)}&type_travail=${encodeURIComponent(type_travail)}`,
+        cancel_url: `https://dentist-portal.3dguidedental.com/payment-cancel`,
         line_items: [
           {
             price_data: {
