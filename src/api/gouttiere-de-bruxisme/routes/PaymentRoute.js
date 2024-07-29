@@ -8,5 +8,14 @@ module.exports = {
         auth: false,
       },
     }
+    ,
+    {
+      method: 'POST',
+      path: '/checkCaseNumber',
+      handler: 'confirm-payment-gouttiere-de-bruxisme.checkCaseNumber',
+      config: {
+        auth: false,
+      },
+    }
   ],
 };

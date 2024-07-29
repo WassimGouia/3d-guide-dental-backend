@@ -297,5 +297,86 @@ module.exports = {
       ctx.response.status = 500;
       return { error: `Failed to confirm payment: ${error.message}` };
     }
+  },
+
+  async checkCaseNumber(ctx) {
+    const { caseNumber } = ctx.request.body;
+
+    try {
+      // Check in gouttiere-de-bruxisme table
+          const existingGouttiereEntry = await strapi.db
+            .query("api::gouttiere-de-bruxisme.gouttiere-de-bruxisme")
+            .findOne({
+              where: { numero_cas: caseNumber },
+            });
+
+          if (existingGouttiereEntry) {
+            return ctx.badRequest('Case number already exists in gouttiere-de-bruxisme table');
+          }
+
+          // Check in guide-classique table
+          const existingGuideClassiqueEntry = await strapi.db
+            .query("api::guide-classique.guide-classique")
+            .findOne({
+              where: { numero_cas: caseNumber },
+            });
+
+          if (existingGuideClassiqueEntry) {
+            return ctx.badRequest('Case number already exists in guide-classique table');
+          }
+
+
+          const existingAutreServiceEntry = await strapi.db
+          .query("api::autres-services-de-conception.autres-services-de-conception")
+          .findOne({
+            where: { numero_cas: caseNumber },
+          });
+
+          if (existingAutreServiceEntry) {
+            return ctx.badRequest('Case number already exists in Auttre service de conceptions table');
+          }
+
+
+          const existingGuideAEtageEntry = await strapi.db
+          .query("api::guide-a-etage.guide-a-etage")
+          .findOne({
+            where: { numero_cas: caseNumber },
+          });
+
+        if (existingGuideAEtageEntry) {
+          return ctx.badRequest('Case number already exists in guide-a-etages table');
+        }
+
+        const existingRapportRadioEntry = await strapi.db
+        .query("api::rapport-radiologique.rapport-radiologique")
+        .findOne({
+          where: { numero_cas: caseNumber },
+        });
+
+      if (existingRapportRadioEntry) {
+        return ctx.badRequest('Case number already exists in guide-classique table');
+      }
+
+
+      const existingGuideGinEntry = await strapi.db
+      .query("api::guide-pour-gingivectomie.guide-pour-gingivectomie")
+      .findOne({
+        where: { numero_cas: caseNumber },
+      });
+
+      if (existingGuideGinEntry) {
+      return ctx.badRequest('Case number already exists in guide-gin table');
+      }
+
+      // If case number does not exist, return a success response
+      return ctx.send({
+        message: 'Case number is available',
+      });
+    } catch (error) {
+      // Handle any errors that occur during the query
+      console.error('Error checking case number:', error);
+      return ctx.internalServerError('An error occurred while checking the case number');
+    }
   }
+    
 };
