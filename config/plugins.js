@@ -35,7 +35,7 @@ module.exports = ({ env }) => ({
       email: {
         enable: true,
         email_confirmation: true,
-        email_confirmation_redirection: "http://92.222.101.80:3000/cabinet",
+        email_confirmation_redirection: "https://dentist-portal.3dguidedental.com/cabinet",
       },
     },
   },
